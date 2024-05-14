@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.paquete.JuegoController">
+  <tabs>
+    <Tab text="Juego">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" layoutX="23.0" layoutY="23.0" prefHeight="324.0" prefWidth="339.0" style="-fx-border-color: #000000;">
+                     <children>
+                        <GridPane fx:id="tablero" alignment="CENTER">
+                           <VBox.margin>
+                              <Insets top="12.0" />
+                           </VBox.margin>
+                        </GridPane>
+                     </children>
+                  </VBox>
+                  <Button layoutX="456.0" layoutY="172.0" mnemonicParsing="false" onAction="#onComenzarClick" text="Comenzar" />
+                  <Label layoutX="477.0" layoutY="88.0" />
+                  <Label layoutX="487.0" layoutY="98.0" />
+                  <Button layoutX="457.0" layoutY="210.0" mnemonicParsing="false" onAction="#onActualizarClick" text="Actualizar" />
+                  <Button fx:id="PausarButton" layoutX="465.0" layoutY="132.0" mnemonicParsing="false" onAction="#onPausarContinuarClick" />
+                  <Button fx:id="AvanzarButton" layoutX="445.0" layoutY="246.0" mnemonicParsing="false" onAction="#onBucleOrden" text="Avanzar Turno" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Ajustes">
+         <content>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Agua">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Slider fx:id="sliderProbAgua" blockIncrement="1.0" layoutX="216.0" layoutY="42.0" majorTickUnit="10.0" max="50.0" minorTickCount="9" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #07C0EE;" value="10.0" />
+                              <Slider fx:id="sliderTurnAgua" layoutX="216.0" layoutY="95.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #07C0EE;" value="2.0" />
+                              <Label layoutX="27.0" layoutY="41.0" text="Probabilidad de aparición">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="27.0" layoutY="94.0" text="Turnos de vida que suma">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="88.0" layoutY="61.0" />
+                              <Label fx:id="labelProbAgua" layoutX="74.0" layoutY="61.0" />
+                              <Label fx:id="labelTurnAgua" layoutX="74.0" layoutY="115.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Comida">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="476.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="41.0" text="Probabilidad de aparición">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="27.0" layoutY="94.0" text="Turnos de vida que suma">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Slider fx:id="sliderProbCom" blockIncrement="1.0" layoutX="216.0" layoutY="42.0" majorTickUnit="10.0" max="50.0" minorTickCount="9" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #EC2121;" value="10.0" />
+                              <Slider fx:id="sliderTurnCom" blockIncrement="1.0" layoutX="216.0" layoutY="95.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #EC2121;" value="2.0" />
+                              <Label fx:id="labelProbComi" layoutX="73.0" layoutY="61.0" />
+                              <Label fx:id="labelProbCom" layoutX="73.0" layoutY="61.0" />
+                              <Label fx:id="labelTurnCom" layoutX="73.0" layoutY="114.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Montaña">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="41.0" text="Probabilidad de aparición">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Slider fx:id="sliderProbMont" blockIncrement="1.0" layoutX="216.0" layoutY="42.0" majorTickUnit="10.0" max="50.0" minorTickCount="9" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #9A6508;" value="10.0" />
+                              <Slider fx:id="sliderTurnMont" blockIncrement="1.0" layoutX="216.0" layoutY="95.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #9A6508;" value="2.0" />
+                              <Label layoutX="27.0" layoutY="94.0" text="Turnos de vida que resta">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labelProbMont" layoutX="73.0" layoutY="61.0" prefHeight="17.0" prefWidth="35.0" />
+                              <Label fx:id="labelTurnMon" graphicTextGap="1.0" layoutX="77.0" layoutY="114.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Tesoro">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="41.0" text="Probabilidad de aparición">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Slider fx:id="sliderProbTesoro" blockIncrement="1.0" layoutX="216.0" layoutY="42.0" majorTickUnit="10.0" max="50.0" minorTickCount="9" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #09DA19;" value="10.0" />
+                              <Slider fx:id="sliderAumentoTesoro" blockIncrement="1.0" layoutX="216.0" layoutY="95.0" majorTickUnit="5.0" max="20.0" min="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #09DA19;" value="5.0" />
+                              <Label layoutX="12.0" layoutY="85.0" prefHeight="51.0" prefWidth="204.0" text="Aumento de la probabilidad de reproducción" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labelAumentoTesoro" layoutX="88.0" layoutY="132.0" />
+                              <Label fx:id="labelProbTesoro" layoutX="74.0" layoutY="61.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Biblioteca">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Slider fx:id="sliderProbBiblio" blockIncrement="1.0" layoutX="216.0" layoutY="42.0" majorTickUnit="10.0" max="50.0" minorTickCount="9" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #B216ED;" value="10.0" />
+                              <Slider fx:id="sliderAumentoBiblio" blockIncrement="1.0" layoutX="216.0" layoutY="95.0" majorTickUnit="5.0" max="20.0" min="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #B216ED;" value="5.0" />
+                              <Label layoutX="27.0" layoutY="41.0" text="Probabilidad de aparición">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="27.0" layoutY="84.0" prefHeight="59.0" prefWidth="165.0" text="Aumento en al probabilidad de clonación" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labelProbBiblio" layoutX="88.0" layoutY="61.0" />
+                              <Label fx:id="labelAumentoBiblio" layoutX="96.0" layoutY="135.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Pozo">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="503.0">
+                           <children>
+                              <Slider fx:id="sliderProbPozo" blockIncrement="1.0" layoutX="216.0" layoutY="42.0" majorTickUnit="10.0" max="50.0" minorTickCount="9" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: #000405;" value="10.0" />
+                              <Label layoutX="27.0" layoutY="41.0" text="Probabilidad de aparición">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labelProbPozo" layoutX="88.0" layoutY="62.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Interactuar">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ChoiceBox fx:id="choiceAccion" layoutX="37.0" layoutY="91.0" prefHeight="25.0" prefWidth="101.0" />
+                              <Text layoutX="64.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acción">
+                                 <font>
+                                    <Font name="Copperplate Gothic Light" size="12.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="choiceClase" layoutX="164.0" layoutY="91.0" prefHeight="25.0" prefWidth="101.0" />
+                              <Text layoutX="196.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="clase">
+                                 <font>
+                                    <Font name="Copperplate Gothic Light" size="12.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="choicePosX" layoutX="300.0" layoutY="91.0" prefHeight="25.0" prefWidth="101.0" />
+                              <Text layoutX="321.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fila (x, 0)">
+                                 <font>
+                                    <Font name="Copperplate Gothic Light" size="12.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="choicePosY" layoutX="436.0" layoutY="91.0" prefHeight="25.0" prefWidth="101.0" />
+                              <Text layoutX="442.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Columna (0,Y)">
+                                 <font>
+                                    <Font name="Copperplate Gothic Light" size="12.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </content>
+    </Tab>
+  </tabs>
+</TabPane>
