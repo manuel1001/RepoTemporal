@@ -22,6 +22,7 @@ public class Partida {
     private int aparicionTesoro;
     private int aumentoTesoro;
     private int aparicionPozo;
+    private int aparicionRecurso;
 
     ///Datos del mapa
     private int numeroColumnas;
@@ -34,12 +35,20 @@ public class Partida {
     ///Individuos
     private ListaInd listaInicialIndividuos;
 
+    public int getAparicionRecurso() {
+        return aparicionRecurso;
+    }
+
+    public void setAparicionRecurso(int aparicionRecurso) {
+        this.aparicionRecurso = aparicionRecurso;
+    }
+
     ///Methods
     public Partida(){
 
     }
     public Partida(String archivoNombre, int aparicionAgua, int turnosAgua, int aparicionComida, int turnosComida,
-                   int aparicionMontania, int turnosMontania, int aparicionBiblio, int aumentoBiblio, int aparicionTesoro, int aumentoTesoro, int aparicionPozo, ListaInd listaInicialIndividuos, int numeroColumnas, int numeroFilas) {
+                   int aparicionMontania, int turnosMontania, int aparicionBiblio, int aumentoBiblio, int aparicionTesoro, int aumentoTesoro, int aparicionPozo, ListaInd listaInicialIndividuos, int numeroColumnas, int numeroFilas, int aparicionRecurso) {
         this.archivoNombre = archivoNombre;
         this.aparicionAgua = aparicionAgua;
         this.turnosAgua = turnosAgua;
@@ -55,6 +64,7 @@ public class Partida {
         this.listaInicialIndividuos = listaInicialIndividuos;
         this.numeroColumnas = numeroColumnas;
         this.numeroFilas = numeroFilas;
+        this.aparicionRecurso = aparicionRecurso;
     }
 
     ///Constructor temporal mientras se hace la clase Individuo

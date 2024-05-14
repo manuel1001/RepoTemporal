@@ -83,6 +83,11 @@ public class MenuController implements GsonUtilEjemplo{
     private Label labelMapCol;
     @FXML
     private Slider sliderMapCol;
+    @FXML
+    private Slider sliderProbRecursos;
+    @FXML
+    private Label labelProbRecursos;
+
 
     ///La choiceBox
     @FXML
@@ -106,7 +111,7 @@ public class MenuController implements GsonUtilEjemplo{
                         (int) sliderTurnAgua.getValue(), (int) sliderProbCom.getValue(), (int) sliderTurnCom.getValue(),
                         (int) sliderProbMont.getValue(), (int) sliderTurnMont.getValue(), (int) sliderProbBiblio.getValue(),
                         (int) sliderAumentoBiblio.getValue(), (int) sliderProbTesoro.getValue(), (int) sliderAumentoTesoro.getValue(),
-                        (int) sliderProbPozo.getValue(),this.listaIndividuos, (int) sliderMapCol.getValue(), (int) sliderMapRows.getValue());
+                        (int) sliderProbPozo.getValue(),this.listaIndividuos, (int) sliderMapCol.getValue(), (int) sliderMapRows.getValue(), (int) sliderProbRecursos.getValue());
                 String nombrePartida = nuevaPartida.getArchivoNombre() + ".json";
                 GsonUtilEjemplo.guardarObjetoEnArchivo(nombrePartida, nuevaPartida);
                 Partida cargaPartida = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombrePartida, Partida.class);
@@ -166,6 +171,7 @@ public class MenuController implements GsonUtilEjemplo{
         labelClonInd.textProperty().bind(sliderClonInd.valueProperty().asString());
         labelMapRows.textProperty().bind(sliderMapRows.valueProperty().asString());
         labelMapCol.textProperty().bind(sliderMapCol.valueProperty().asString());
+        labelProbRecursos.textProperty().bind(sliderProbRecursos.valueProperty().asString());
         ///Opciones de la choicebox de los individuos
         choiceIndividuo.getItems().addAll(tiposIndividuo);
     }

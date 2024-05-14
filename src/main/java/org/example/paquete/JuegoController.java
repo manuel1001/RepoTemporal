@@ -12,6 +12,7 @@ import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.Individuo;
 
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 
 public class JuegoController implements GsonUtilEjemplo {
@@ -375,6 +376,15 @@ public class JuegoController implements GsonUtilEjemplo {
                 }
             }
             ///8. ¿Nuevos recursos?
+            for (int l = 0; l < numCasillas; l++) {
+                if (listaCasillas.getElemento(l).getData().getListaRecursos().getNumeroElementos() < 3){
+                    Random rand = new Random();
+                    int ruleta = rand.nextInt(101);
+                    if (modelo.getAparicionRecurso() >= ruleta){
+                        ///¿Qué recurso aparece?
+                    }
+                }
+            }
         }
 
         else{
