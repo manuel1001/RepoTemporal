@@ -100,7 +100,7 @@ public class JuegoController implements GsonUtilEjemplo {
     public void onComenzarClick() {
         try {
             if (this.nombreJuego == null) {
-                this.nombreJuego = "miLucha.json";
+                this.nombreJuego = "morata.json";
             }
             ///Iniciamos el modelo y sus properties desde le Json
             this.modelo = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombreJuego, Partida.class);
@@ -317,29 +317,53 @@ public class JuegoController implements GsonUtilEjemplo {
                     ind1.setVida(ind1.getVida() - 1);
                 }
             }
-            ///2. Para cada recurso se evalua si sigue activo o debe eliminarse
+//            /2. Para cada recurso se evalua si sigue activo o debe eliminarse
             int numCasillas = listaCasillas.getNumeroElementos();
             for (int l = 0; l < numCasillas; l++) {
                 int cuenta = listaCasillas.getElemento(l).getData().getListaRecursos().getNumeroElementos();
+                if(cuenta != 0){
                 for(int h = 0; h < cuenta; h++){
                     if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().getDuracion() <= 0){
                         if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Agua){
                             listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("A", ""));
                             listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                            h--;
+                            cuenta--;
                         }
                         else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Tesoro){
                             listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("T", ""));
                             listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                            h--;
+                            cuenta--;
                         }
                         else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Biblioteca){
                             listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("B", ""));
                             listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                            h--;
+                            cuenta--;
                         }
-                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Biblioteca){
-                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("B", ""));
+                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Comida){
+                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("C", ""));
                             listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                            h--;
+                            cuenta--;
+                        }
+                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Montania){
+                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("M", ""));
+                            listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                            h--;
+                            cuenta--;
+                        }
+                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Pozo){
+                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("P", ""));
+                            listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                            h--;
+                            cuenta--;
                         }
                     }
+                    else{
+                        listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().setDuracion(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().getDuracion() - 1);
+                    }}
                 }
             }
             ///3. Movimiento
