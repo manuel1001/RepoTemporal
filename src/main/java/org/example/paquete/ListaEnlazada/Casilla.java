@@ -7,7 +7,7 @@ import org.example.paquete.individuos.*;
 public class Casilla {
 
     private ListaInd listaIndividuos;
-    private ListaEnlazada listaRecursos;
+    private ListaRecursos listaRecursos;
     private int posX;
     private int posY;
 
@@ -15,7 +15,7 @@ public class Casilla {
         this.posX = posX;
         this.posY = posY;
         this.listaIndividuos = new ListaInd();
-        this.listaRecursos = new ListaEnlazada();
+        this.listaRecursos = new ListaRecursos();
     }
 
     public ListaInd getListaIndividuos() {
@@ -26,11 +26,11 @@ public class Casilla {
         this.listaIndividuos = listaIndividuos;
     }
 
-    public ListaEnlazada getListaRecursos() {
+    public ListaRecursos getListaRecursos() {
         return listaRecursos;
     }
 
-    public void setListaRecursos(ListaEnlazada listaRecursos) {
+    public void setListaRecursos(ListaRecursos listaRecursos) {
         this.listaRecursos = listaRecursos;
     }
 

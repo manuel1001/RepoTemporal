@@ -5,11 +5,36 @@ public class Recurso {
     private int posX;
     private int posY;
 
+    public int getVida() {
+        return vida;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
+
+    private int duracion;
+
 
     public Recurso(int vida, int posX, int posY) {
         this.vida = vida;
         this.posX = posX;
         this.posY = posY;
+        this.duracion = 3;
+    }
+
+    public Recurso(int posX, int posY) {
+        this.posX = posX;
+        this.posY = posY;
+        this.duracion = 3;
     }
 
     public int getTurnos() {
