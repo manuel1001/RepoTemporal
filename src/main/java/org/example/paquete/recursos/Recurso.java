@@ -60,4 +60,7 @@ public class Recurso {
     public void setPosY(int posY) {
         this.posY = posY;
     }
+    public String toString(){
+        return ",turnos: " + duracion + "} ";
+    }
 }

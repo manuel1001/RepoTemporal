@@ -6,4 +6,7 @@ public class Biblioteca extends Recurso{
         super(posX, posY);
         this.aumentoBiblio = aumentoBiblio;
     }
+    public String toString(){
+        return "{Biblio= aumento:" + aumentoBiblio + super.toString();
+    }
 }

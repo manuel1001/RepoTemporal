@@ -8,5 +8,9 @@ public class Pozo extends Recurso {
     public Pozo(int posX, int posY) {
         super(posX, posY);
     }
+
+    public String toString() {
+        return "{Pozo=" + super.toString();
+    }
 }
 

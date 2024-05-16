@@ -171,16 +171,13 @@ public class Individuo {
 
     @Override
     public String toString() {
-        return "Individuos.Individuo{" +
+        return "Individuo" + tipo + ":" +
                 "id=" + id +
                 ", generation=" + generation +
                 ", vida=" + vida +
                 ", probRepro=" + probRepro +
                 ", probClon=" + probClon +
                 ", probMuerte=" + probMuerte +
-                ", posX=" + posX +
-                ", posY=" + posY +
-                ", tipo=" + tipo+
                 '}';
     }
 

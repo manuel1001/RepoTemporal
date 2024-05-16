@@ -1,5 +1,7 @@
 package org.example.paquete;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.*;
 import javafx.fxml.FXML;
@@ -90,6 +92,10 @@ public class JuegoController implements GsonUtilEjemplo {
     ///Casillas
     private ListaCasilla listaCasillas = new ListaCasilla();
     private int contadorId;
+    @FXML
+    private Label labelIndLayout;
+    @FXML
+    private Label labelRecLayout;
 
     ///Methods
     public void setNombreJuego(String nombreJuego) {
@@ -140,11 +146,13 @@ public class JuegoController implements GsonUtilEjemplo {
                     Label labelcasilla = new Label("");
                     labelcasilla.setMinSize(15, 15);
                     labelcasilla.setStyle("-fx-border-color: black; -fx-text-alignment: center;");
+                    labelcasilla.setOnMouseClicked(this::handleClick);
                     tablero.add(labelcasilla, j, i);
                     listaLabels.add(new ElementoLabel(labelcasilla));
                     listaCasillas.add(new ElementoCasilla(new Casilla(j, i)));
                 }
             }
+            ///Añadimos los individuos a cada casilla, y lo representamos en las labels
             int x2 = modelo.getListaInicialIndividuos().getNumeroElementos();
             for (int i = 0; i < x2; i++) {
                 Individuo ind = modelo.getListaInicialIndividuos().getElemento(i).getData();
@@ -162,6 +170,33 @@ public class JuegoController implements GsonUtilEjemplo {
     public int conversorPosicion(int x, int y) {
         return x - 1 + ((y - 1) * modelo.getNumeroFilas());
     }
+    @FXML
+    private void handleClick(MouseEvent event){
+        Label etiqueda = (Label) event.getSource();
+        boolean exit = false;
+        int pos = 0;
+        while (!exit){
+            if(listaLabels.getElemento(pos).getData() == etiqueda){
+                exit = true;
+            }
+            pos++;
+        }
+        pos = pos - 1;
+        System.out.println("Posicion:" + pos);
+        String indLayout = "";
+        if(listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos() > 0){
+        for(int i = 0; i < listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos(); i++){
+            indLayout = indLayout + listaCasillas.getElemento(pos).getData().getListaIndividuos().getElemento(i).getData().toString();
+        }}
+        labelIndLayout.setText(indLayout);
+        String recLayout = "";
+        if(listaCasillas.getElemento(pos).getData().getListaRecursos().getNumeroElementos() > 0){
+        for(int i = 0; i < listaCasillas.getElemento(pos).getData().getListaRecursos().getNumeroElementos(); i++){
+            recLayout = recLayout + listaCasillas.getElemento(pos).getData().getListaRecursos().getElemento(i).getData().toString();
+        }}
+        labelRecLayout.setText(recLayout);
+        System.out.println("Casilla clicada=" + listaCasillas.getElemento(pos).getData().getPosY() + "," + listaCasillas.getElemento(pos).getData().getPosX());
+    }
 
     public void initialize() {
         labelProbMont.textProperty().bind(sliderProbMont.valueProperty().asString());
@@ -175,7 +210,6 @@ public class JuegoController implements GsonUtilEjemplo {
         labelProbPozo.textProperty().bind(sliderProbPozo.valueProperty().asString());
         labelProbAgua.textProperty().bind(sliderProbAgua.valueProperty().asString());
         labelTurnAgua.textProperty().bind(sliderTurnAgua.valueProperty().asString());
-        PausarButton.setText("Reanudar");
         ///Choicebox linkeadas
         choiceAccion.getItems().addAll(opcionesAccion);
         choiceClase.getItems().addAll(opcionesClase);
@@ -256,47 +290,6 @@ public class JuegoController implements GsonUtilEjemplo {
 //        }
     }
 
-    public void onAvanzarButton() {
-        ///NullPointer
-        int x3 = modelo.getListaInicialIndividuos().getNumeroElementos();
-        if (x3 >= 1) {
-            for (int i = 0; i < x3; i++) {
-                Individuo ind = modelo.getListaInicialIndividuos().getElemento(i).getData();
-                int posx = ind.getPosX();
-                int posy = ind.getPosY();
-                if (ind.getVida() == 0) {
-                    modelo.getListaInicialIndividuos().del(i);
-                    listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().delIndividuo(ind);
-                    listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().replaceFirst("I", ""));
-                    i--;
-                    x3--;
-                } else {
-                    listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().delIndividuo(ind);
-                    listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().replaceFirst("I", ""));
-                    if (ind.getTipo().equals("Básico")) {
-                        ind.movimientoBasic();
-                        int posx2 = ind.getPosX();
-                        int posy2 = ind.getPosY();
-                        listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
-                        listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
-                        System.out.println("Iterando");
-                        ind.setVida(ind.getVida() - 1);
-                        if (ind.meClono()) {
-                            System.out.println("Clonando");
-                            Individuo ind2 = new Individuo(contadorId, ind.getGeneration() + 1, ind.getVida(), ind.getProbRepro(), ind.getProbClon(), ind.getProbMuerte(), posx2, posy2, ind.getTipo());
-                            contadorId++;
-                            modelo.getListaInicialIndividuos().add(new ElementoInd(ind2));
-                            listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind2);
-                            listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
-                        }
-                    }
-                }
-            }
-        } else {
-            System.out.println("Fin del juego");
-        }
-
-    }
 
     public void onBucleOrden() {
         int x3 = modelo.getListaInicialIndividuos().getNumeroElementos();
