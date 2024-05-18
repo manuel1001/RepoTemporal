@@ -1,5 +1,8 @@
 package org.example.paquete.individuos;
 
+import org.example.paquete.ListaEnlazada.ListaRecursos;
+import org.example.paquete.recursos.Recurso;
+
 import java.util.Random;
 
 public class Individuo {
@@ -10,7 +13,18 @@ public class Individuo {
     private int probClon;
     private int probMuerte = 100 - this.probRepro;
     private int posX;
+
     private int posY;
+
+    public Recurso getRecursoObj() {
+        return recursoObj;
+    }
+
+    public void setRecursoObj(Recurso recursoObj) {
+        this.recursoObj = recursoObj;
+    }
+
+    public Recurso recursoObj;
 
     public String getTipo() {
         return tipo;

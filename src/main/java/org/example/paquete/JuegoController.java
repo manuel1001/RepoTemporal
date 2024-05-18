@@ -15,6 +15,7 @@ import org.example.paquete.individuos.Individuo;
 import org.example.paquete.recursos.Agua;
 import org.example.paquete.recursos.*;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -74,8 +75,7 @@ public class JuegoController implements GsonUtilEjemplo {
     private Slider sliderProbPozo;
     ///Boolean para la pausa
     private Boolean pausado = true;
-    @FXML
-    private Button PausarButton;
+
 
     ///Interactuar con las posiciones
     @FXML
@@ -89,6 +89,10 @@ public class JuegoController implements GsonUtilEjemplo {
     private ChoiceBox<Integer> choicePosX;
     @FXML
     private ChoiceBox<Integer> choicePosY;
+    @FXML
+    private ChoiceBox<Integer> choiceId;
+    @FXML
+    private Label labelInfoInterac;
     ///Casillas
     private ListaCasilla listaCasillas = new ListaCasilla();
     private int contadorId;
@@ -96,6 +100,7 @@ public class JuegoController implements GsonUtilEjemplo {
     private Label labelIndLayout;
     @FXML
     private Label labelRecLayout;
+    private int contadorTurno = 0;
 
     ///Methods
     public void setNombreJuego(String nombreJuego) {
@@ -106,7 +111,7 @@ public class JuegoController implements GsonUtilEjemplo {
     public void onComenzarClick() {
         try {
             if (this.nombreJuego == null) {
-                this.nombreJuego = "morata.json";
+                this.nombreJuego = "normalitos.json";
             }
             ///Iniciamos el modelo y sus properties desde le Json
             this.modelo = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombreJuego, Partida.class);
@@ -144,7 +149,7 @@ public class JuegoController implements GsonUtilEjemplo {
             for (int i = 1; i < x + 1; i++) {
                 for (int j = 1; j < y + 1; j++) {
                     Label labelcasilla = new Label("");
-                    labelcasilla.setMinSize(15, 15);
+                    labelcasilla.setMinSize(23, 15);
                     labelcasilla.setStyle("-fx-border-color: black; -fx-text-alignment: center;");
                     labelcasilla.setOnMouseClicked(this::handleClick);
                     tablero.add(labelcasilla, j, i);
@@ -170,13 +175,14 @@ public class JuegoController implements GsonUtilEjemplo {
     public int conversorPosicion(int x, int y) {
         return x - 1 + ((y - 1) * modelo.getNumeroFilas());
     }
+
     @FXML
-    private void handleClick(MouseEvent event){
+    private void handleClick(MouseEvent event) {
         Label etiqueda = (Label) event.getSource();
         boolean exit = false;
         int pos = 0;
-        while (!exit){
-            if(listaLabels.getElemento(pos).getData() == etiqueda){
+        while (!exit) {
+            if (listaLabels.getElemento(pos).getData() == etiqueda) {
                 exit = true;
             }
             pos++;
@@ -184,16 +190,18 @@ public class JuegoController implements GsonUtilEjemplo {
         pos = pos - 1;
         System.out.println("Posicion:" + pos);
         String indLayout = "";
-        if(listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos() > 0){
-        for(int i = 0; i < listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos(); i++){
-            indLayout = indLayout + listaCasillas.getElemento(pos).getData().getListaIndividuos().getElemento(i).getData().toString();
-        }}
+        if (listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos() > 0) {
+            for (int i = 0; i < listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos(); i++) {
+                indLayout = indLayout + listaCasillas.getElemento(pos).getData().getListaIndividuos().getElemento(i).getData().toString();
+            }
+        }
         labelIndLayout.setText(indLayout);
         String recLayout = "";
-        if(listaCasillas.getElemento(pos).getData().getListaRecursos().getNumeroElementos() > 0){
-        for(int i = 0; i < listaCasillas.getElemento(pos).getData().getListaRecursos().getNumeroElementos(); i++){
-            recLayout = recLayout + listaCasillas.getElemento(pos).getData().getListaRecursos().getElemento(i).getData().toString();
-        }}
+        if (listaCasillas.getElemento(pos).getData().getListaRecursos().getNumeroElementos() > 0) {
+            for (int i = 0; i < listaCasillas.getElemento(pos).getData().getListaRecursos().getNumeroElementos(); i++) {
+                recLayout = recLayout + listaCasillas.getElemento(pos).getData().getListaRecursos().getElemento(i).getData().toString();
+            }
+        }
         labelRecLayout.setText(recLayout);
         System.out.println("Casilla clicada=" + listaCasillas.getElemento(pos).getData().getPosY() + "," + listaCasillas.getElemento(pos).getData().getPosX());
     }
@@ -314,49 +322,44 @@ public class JuegoController implements GsonUtilEjemplo {
             int numCasillas = listaCasillas.getNumeroElementos();
             for (int l = 0; l < numCasillas; l++) {
                 int cuenta = listaCasillas.getElemento(l).getData().getListaRecursos().getNumeroElementos();
-                if(cuenta != 0){
-                for(int h = 0; h < cuenta; h++){
-                    if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().getDuracion() <= 0){
-                        if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Agua){
-                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("A", ""));
-                            listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
-                            h--;
-                            cuenta--;
-                        }
-                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Tesoro){
-                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("T", ""));
-                            listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
-                            h--;
-                            cuenta--;
-                        }
-                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Biblioteca){
-                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("B", ""));
-                            listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
-                            h--;
-                            cuenta--;
-                        }
-                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Comida){
-                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("C", ""));
-                            listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
-                            h--;
-                            cuenta--;
-                        }
-                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Montania){
-                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("M", ""));
-                            listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
-                            h--;
-                            cuenta--;
-                        }
-                        else if(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Pozo){
-                            listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("P", ""));
-                            listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
-                            h--;
-                            cuenta--;
+                if (cuenta != 0) {
+                    for (int h = 0; h < cuenta; h++) {
+                        if (listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().getDuracion() <= 0) {
+                            if (listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Agua) {
+                                listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("A", ""));
+                                listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                                h--;
+                                cuenta--;
+                            } else if (listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Tesoro) {
+                                listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("T", ""));
+                                listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                                h--;
+                                cuenta--;
+                            } else if (listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Biblioteca) {
+                                listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("B", ""));
+                                listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                                h--;
+                                cuenta--;
+                            } else if (listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Comida) {
+                                listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("C", ""));
+                                listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                                h--;
+                                cuenta--;
+                            } else if (listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Montania) {
+                                listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("M", ""));
+                                listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                                h--;
+                                cuenta--;
+                            } else if (listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData() instanceof Pozo) {
+                                listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText().replaceFirst("P", ""));
+                                listaCasillas.getElemento(l).getData().getListaRecursos().del(h);
+                                h--;
+                                cuenta--;
+                            }
+                        } else {
+                            listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().setDuracion(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().getDuracion() - 1);
                         }
                     }
-                    else{
-                        listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().setDuracion(listaCasillas.getElemento(l).getData().getListaRecursos().getElemento(h).getData().getDuracion() - 1);
-                    }}
                 }
             }
             ///3. Movimiento
@@ -373,7 +376,48 @@ public class JuegoController implements GsonUtilEjemplo {
                     int posy2 = ind.getPosY();
                     listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
                     listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
-
+                }
+                if (ind.getTipo().equals("Normal")) {
+//                    /Comprobamos que el objetivo recurso se valido
+                    if (contadorTurno != 0) {
+                        if (ind.getRecursoObj() == null || ind.getRecursoObj().getDuracion() == 0 || (ind.getRecursoObj().getPosY() == ind.getPosY() && ind.getRecursoObj().getPosX() == ind.getPosX())) {
+                            boolean salir = false;
+                            Random random = new Random();
+                            while (!salir) {
+                                int selec = random.nextInt(listaCasillas.getNumeroElementos());
+                                if (listaCasillas.getElemento(selec).getData().getListaRecursos().getNumeroElementos() != 0 && (ind.getPosX() != listaCasillas.getElemento(selec).getData().getPosX() || ind.getPosY() != listaCasillas.getElemento(selec).getData().getPosY())) {
+                                    int posRec = random.nextInt(listaCasillas.getElemento(selec).getData().getListaRecursos().getNumeroElementos());
+                                    ind.setRecursoObj(listaCasillas.getElemento(selec).getData().getListaRecursos().getElemento(posRec).getData());
+                                    salir = true;
+                                }
+                                System.out.println("Buclenormal");
+                            }
+                        }
+                        ///Ahora nos movemos hacia él
+                        if (ind.getRecursoObj().getPosX() < ind.getPosX()) {
+                            ind.setPosX(ind.getPosX() - 1);
+                        }
+                        if (ind.getRecursoObj().getPosX() > ind.getPosX()) {
+                            ind.setPosX(ind.getPosX() + 1);
+                        }
+                        if (ind.getRecursoObj().getPosY() > ind.getPosY()) {
+                            ind.setPosX(ind.getPosX() + 1);
+                        }
+                        if (ind.getRecursoObj().getPosY() < ind.getPosY()) {
+                            ind.setPosX(ind.getPosX() - 1);
+                        }
+                        int posx2 = ind.getPosX();
+                        int posy2 = ind.getPosY();
+                        listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
+                        listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
+                    } else {
+                        ind.movimientoBasic();
+                        int posx2 = ind.getPosX();
+                        int posy2 = ind.getPosY();
+                        listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
+                        listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
+                        System.out.println("Me muevo basico siendo normal");
+                    }
                 }
             }
             ///4. Mejoras obtenidas por los recursos de la posicion nueva
@@ -381,27 +425,27 @@ public class JuegoController implements GsonUtilEjemplo {
                 Individuo ind = modelo.getListaInicialIndividuos().getElemento(i).getData();
                 int posx = ind.getPosX();
                 int posy = ind.getPosY();
-                if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("A")){
+                if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("A")) {
                     ind.setVida(ind.getVida() + modelo.getTurnosAgua());
                     System.out.println("Bebe");
                 }
-                if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("C")){
+                if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("C")) {
                     ind.setVida(ind.getVida() + modelo.getTurnosComida());
                     System.out.println("come");
                 }
-                if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("B")){
+                if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("B")) {
                     ind.setProbClon(ind.getProbClon() + modelo.getAumentoBiblio());
                     System.out.println("Encuentra bilbio");
                 }
-                if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("T")){
+                if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("T")) {
                     ind.setProbRepro(ind.getProbRepro() + modelo.getAumentoTesoro());
                     System.out.println("Encuentra tesoro");
                 }
-                if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("P")){
+                if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("P")) {
                     ind.setVida(0);
                     System.out.println("Cae en pozo");
                 }
-                if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("M")){
+                if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("M")) {
                     ind.setVida(ind.getVida() - modelo.getTurnosMontania());
                     System.out.println("choque montaña");
                 }
@@ -443,71 +487,107 @@ public class JuegoController implements GsonUtilEjemplo {
             }
             ///8. ¿Nuevos recursos?
             for (int l = 0; l < numCasillas; l++) {
-                if (listaCasillas.getElemento(l).getData().getListaRecursos().getNumeroElementos() < 3){
+                if (listaCasillas.getElemento(l).getData().getListaRecursos().getNumeroElementos() < 3) {
                     Random rand = new Random();
                     int ruleta = rand.nextInt(101);
-                    if (modelo.getAparicionRecurso() >= ruleta){
+                    if (modelo.getAparicionRecurso() >= ruleta) {
                         int ruleta2 = rand.nextInt(6);
                         boolean exit = false;
-                        while(!exit){
-                            if (ruleta2 == 0 && modelo.getAparicionAgua() >= ruleta){
-                                Agua agua = new Agua(modelo.getTurnosAgua(),listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                        while (!exit) {
+                            if (ruleta2 == 0 && modelo.getAparicionAgua() >= ruleta) {
+                                Agua agua = new Agua(modelo.getTurnosAgua(), listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                 ElementoRec elAgua = new ElementoRec(agua);
                                 listaCasillas.getElemento(l).getData().getListaRecursos().add(elAgua);
                                 listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText() + "A");
-                                exit =true;
-                            }
-                            else if (ruleta2 == 1 && modelo.getAparicionPozo() >= ruleta){
+                                exit = true;
+                            } else if (ruleta2 == 1 && modelo.getAparicionPozo() >= ruleta) {
                                 Pozo pozo = new Pozo(listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                 ElementoRec elPozo = new ElementoRec(pozo);
                                 listaCasillas.getElemento(l).getData().getListaRecursos().add(elPozo);
                                 listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText() + "P");
-                                exit =true;
-                            }
-                            else if (ruleta2 == 2 && modelo.getAparicionComida() >= ruleta){
-                                Comida comida = new Comida(modelo.getTurnosAgua(),listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                exit = true;
+                            } else if (ruleta2 == 2 && modelo.getAparicionComida() >= ruleta) {
+                                Comida comida = new Comida(modelo.getTurnosAgua(), listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                 ElementoRec elComida = new ElementoRec(comida);
                                 listaCasillas.getElemento(l).getData().getListaRecursos().add(elComida);
                                 listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText() + "C");
-                                exit =true;
-                            }
-                            else if (ruleta2 == 3 && modelo.getAparicionMontania() >= ruleta){
-                                Montania montania = new Montania(modelo.getTurnosMontania(),listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                exit = true;
+                            } else if (ruleta2 == 3 && modelo.getAparicionMontania() >= ruleta) {
+                                Montania montania = new Montania(modelo.getTurnosMontania(), listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                 ElementoRec elMontania = new ElementoRec(montania);
                                 listaCasillas.getElemento(l).getData().getListaRecursos().add(elMontania);
                                 listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText() + "M");
-                                exit =true;
-                            }
-                            else if (ruleta2 == 4 && modelo.getAparicionBiblio() >= ruleta){
-                                Biblioteca biblio = new Biblioteca(modelo.getAumentoBiblio(),listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                exit = true;
+                            } else if (ruleta2 == 4 && modelo.getAparicionBiblio() >= ruleta) {
+                                Biblioteca biblio = new Biblioteca(modelo.getAumentoBiblio(), listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                 ElementoRec elBiblio = new ElementoRec(biblio);
                                 listaCasillas.getElemento(l).getData().getListaRecursos().add(elBiblio);
                                 listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText() + "B");
-                                exit =true;
-                            }
-                            else if (ruleta2 == 5 && modelo.getAparicionBiblio() >= ruleta){
-                                Tesoro tesoro = new Tesoro(modelo.getAumentoTesoro(),listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                exit = true;
+                            } else if (ruleta2 == 5 && modelo.getAparicionBiblio() >= ruleta) {
+                                Tesoro tesoro = new Tesoro(modelo.getAumentoTesoro(), listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                 ElementoRec elTesoro = new ElementoRec(tesoro);
                                 listaCasillas.getElemento(l).getData().getListaRecursos().add(elTesoro);
                                 listaLabels.getElemento(l).getData().setText(listaLabels.getElemento(l).getData().getText() + "T");
-                                exit =true;
-                            }
-                            else{
+                                exit = true;
+                            } else {
                                 ///Si no se ha generado ninguno, se sortea de nuevo.
                                 ruleta = rand.nextInt(101);
                                 ruleta2 = rand.nextInt(6);
                             }
-
-
                         }
-
                     }
                 }
             }
-        }
-
-        else{
+            ///Cosas secuenciales
+            contadorTurno++;
+            choiceId.getItems().clear();
+            for (int p = 0; p < modelo.getListaInicialIndividuos().getNumeroElementos(); p++) {
+                choiceId.getItems().add(modelo.getListaInicialIndividuos().getElemento(p).getData().getId());
+            }
+        } else {
             System.out.println("fin partida");
         }
+    }
+
+    public void onInteractuarClick() {
+        try {
+            if (choiceAccion.getValue().equals("Añadir")) {
+                ///Si es un recurso habrá que comprobar que no haya tres ya en esa casilla
+                if (choiceClase.getValue().equals("Agua") || choiceClase.getValue().equals("Comida") || choiceClase.getValue().equals("Montaña") || choiceClase.getValue().equals("Tesoro")
+                        || choiceClase.getValue().equals("Biblioteca") || choiceClase.getValue().equals("Pozo")) {
+                    if (listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos() < 3) {
+                        ///Un caso para cada posibilidad de añadir
+                        if (choiceClase.getValue().equals("Agua")) {
+                            Agua agua = new Agua(modelo.getTurnosAgua(), choicePosX.getValue(), choicePosY.getValue());
+                            listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaRecursos().add(new ElementoRec(agua));
+                            listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "A");
+                        } else if (choiceClase.getValue().equals("Comida")) {
+                            Comida comida = new Comida(modelo.getTurnosComida(), choicePosX.getValue(), choicePosY.getValue());
+                            listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaRecursos().add(new ElementoRec(comida));
+                            listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "C");
+                        } else if (choiceClase.getValue().equals("Montaña")) {
+                            Montania montania = new Montania(modelo.getTurnosMontania(), choicePosX.getValue(), choicePosY.getValue());
+                            listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaRecursos().add(new ElementoRec(montania));
+                            listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "M");
+                        } else if (choiceClase.getValue().equals("Pozo")) {
+                            Pozo pozo = new Pozo(choicePosX.getValue(), choicePosY.getValue());
+                            listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaRecursos().add(new ElementoRec(pozo));
+                            listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "P");
+                        }
+                        labelInfoInterac.setText("Recurso añadido a la posición: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                    } else {
+                        labelInfoInterac.setText("La casilla ya está llena de recursos");
+                    }
+                }
+//                if(choiceClase.getValue().equals("IndivBásico")){
+//                    IndivBasico ind = new IndivBasico(modelo.get)
+//
+//                }
+            }
+        } catch (NullPointerException exception) {
+            labelInfoInterac.setText("Error, por favor haga una selección válida");
+        }
+
     }
 }

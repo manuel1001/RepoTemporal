@@ -37,14 +37,6 @@ public class Recurso {
         this.duracion = 3;
     }
 
-    public int getTurnos() {
-        return vida;
-    }
-
-    public void setTurnos(int turnos) {
-        this.vida = turnos;
-    }
-
     public int getPosX() {
         return posX;
     }

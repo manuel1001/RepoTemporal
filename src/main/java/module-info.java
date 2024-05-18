@@ -11,6 +11,7 @@ module org.example.proyectomigrado {
     exports org.example.paquete;
     opens org.example.paquete.ListaEnlazada to javafx.fxml,com.google.gson;
     opens org.example.paquete.individuos to javafx.fxml,com.google.gson;
+    opens org.example.paquete.recursos to javafx.fxml,com.google.gson;
 
 
 }
