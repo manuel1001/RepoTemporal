@@ -14,6 +14,7 @@ import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.Individuo;
 import org.example.paquete.recursos.Agua;
 import org.example.paquete.recursos.*;
+
 import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Random;
@@ -73,8 +74,9 @@ public class JuegoController implements GsonUtilEjemplo {
     private Label labelProbPozo;
     @FXML
     private Slider sliderProbPozo;
-    ///Boolean para la pausa
-    private Boolean pausado = true;
+    ///Boolean para no comenzar dos veces
+    private boolean comenzado = false;
+
 
 
     ///Interactuar con las posiciones
@@ -93,6 +95,10 @@ public class JuegoController implements GsonUtilEjemplo {
     private ChoiceBox<Integer> choiceId;
     @FXML
     private Label labelInfoInterac;
+    @FXML
+    private Label labelClickCasilla;
+    @FXML
+    private Label labelTurnoLayout;
     ///Casillas
     private ListaCasilla listaCasillas = new ListaCasilla();
     private int contadorId;
@@ -109,65 +115,71 @@ public class JuegoController implements GsonUtilEjemplo {
 
     @FXML
     public void onComenzarClick() {
-        try {
-            if (this.nombreJuego == null) {
-                this.nombreJuego = "normalitos.json";
-            }
-            ///Iniciamos el modelo y sus properties desde le Json
-            this.modelo = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombreJuego, Partida.class);
-            propiedadesModelo = new PartidaProperties(modelo);
-            sliderAumentoBiblio.valueProperty().bindBidirectional(propiedadesModelo.aumentoBiblioProperty());
-            sliderAumentoTesoro.valueProperty().bindBidirectional(propiedadesModelo.aumentoTesoroProperty());
-            sliderProbAgua.valueProperty().bindBidirectional(propiedadesModelo.aparicionAguaProperty());
-            sliderProbBiblio.valueProperty().bindBidirectional(propiedadesModelo.aparicionBiblioProperty());
-            sliderProbPozo.valueProperty().bindBidirectional(propiedadesModelo.aparicionPozoProperty());
-            sliderProbCom.valueProperty().bindBidirectional(propiedadesModelo.aparicionComidaProperty());
-            sliderProbMont.valueProperty().bindBidirectional(propiedadesModelo.aparicionMontaniaProperty());
-            sliderProbTesoro.valueProperty().bindBidirectional(propiedadesModelo.aparicionTesoroProperty());
-            sliderTurnAgua.valueProperty().bindBidirectional(propiedadesModelo.turnosAguaProperty());
-            sliderTurnCom.valueProperty().bindBidirectional(propiedadesModelo.turnosComidaProperty());
-            sliderTurnMont.valueProperty().bindBidirectional(propiedadesModelo.turnosMontaniaProperty());
-            this.contadorId = modelo.getListaInicialIndividuos().getNumeroElementos() + 1;
-            System.out.println("Recibido:" + modelo.getArchivoNombre());
-            ///Los choices que dependen de modelo
-            int contador = 1;
-            while (contador <= modelo.getNumeroFilas()) {
-                choicePosX.getItems().add(contador);
-                contador++;
-            }
-            int contador2 = 1;
-            while (contador2 <= modelo.getNumeroColumnas()) {
-                choicePosY.getItems().add(contador2);
-                contador2++;
-            }
-
-            ///Creamos el gridPane
-            int x = modelo.getNumeroFilas();
-            int y = modelo.getNumeroColumnas();
-            System.out.println(x + "," + y);
-            listaLabels = new ListaLabel();
-            for (int i = 1; i < x + 1; i++) {
-                for (int j = 1; j < y + 1; j++) {
-                    Label labelcasilla = new Label("");
-                    labelcasilla.setMinSize(23, 15);
-                    labelcasilla.setStyle("-fx-border-color: black; -fx-text-alignment: center;");
-                    labelcasilla.setOnMouseClicked(this::handleClick);
-                    tablero.add(labelcasilla, j, i);
-                    listaLabels.add(new ElementoLabel(labelcasilla));
-                    listaCasillas.add(new ElementoCasilla(new Casilla(j, i)));
+        if (!comenzado) {
+            try {
+                if (this.nombreJuego == null) {
+                    this.nombreJuego = "normalitos.json";
                 }
+                ///Iniciamos el modelo y sus properties desde le Json
+                this.modelo = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombreJuego, Partida.class);
+                propiedadesModelo = new PartidaProperties(modelo);
+                sliderAumentoBiblio.valueProperty().bindBidirectional(propiedadesModelo.aumentoBiblioProperty());
+                sliderAumentoTesoro.valueProperty().bindBidirectional(propiedadesModelo.aumentoTesoroProperty());
+                sliderProbAgua.valueProperty().bindBidirectional(propiedadesModelo.aparicionAguaProperty());
+                sliderProbBiblio.valueProperty().bindBidirectional(propiedadesModelo.aparicionBiblioProperty());
+                sliderProbPozo.valueProperty().bindBidirectional(propiedadesModelo.aparicionPozoProperty());
+                sliderProbCom.valueProperty().bindBidirectional(propiedadesModelo.aparicionComidaProperty());
+                sliderProbMont.valueProperty().bindBidirectional(propiedadesModelo.aparicionMontaniaProperty());
+                sliderProbTesoro.valueProperty().bindBidirectional(propiedadesModelo.aparicionTesoroProperty());
+                sliderTurnAgua.valueProperty().bindBidirectional(propiedadesModelo.turnosAguaProperty());
+                sliderTurnCom.valueProperty().bindBidirectional(propiedadesModelo.turnosComidaProperty());
+                sliderTurnMont.valueProperty().bindBidirectional(propiedadesModelo.turnosMontaniaProperty());
+                this.contadorId = modelo.getListaInicialIndividuos().getNumeroElementos() + 1;
+                System.out.println("Recibido:" + modelo.getArchivoNombre());
+                ///Los choices que dependen de modelo
+                int contador = 1;
+                while (contador <= modelo.getNumeroFilas()) {
+                    choicePosX.getItems().add(contador);
+                    contador++;
+                }
+                int contador2 = 1;
+                while (contador2 <= modelo.getNumeroColumnas()) {
+                    choicePosY.getItems().add(contador2);
+                    contador2++;
+                }
+
+                ///Creamos el gridPane
+                int x = modelo.getNumeroFilas();
+                int y = modelo.getNumeroColumnas();
+                System.out.println(x + "," + y);
+                listaLabels = new ListaLabel();
+                for (int i = 1; i < x + 1; i++) {
+                    for (int j = 1; j < y + 1; j++) {
+                        Label labelcasilla = new Label("");
+                        labelcasilla.setMinSize(23, 15);
+                        labelcasilla.setStyle("-fx-border-color: black; -fx-text-alignment: center;");
+                        labelcasilla.setOnMouseClicked(this::handleClick);
+                        tablero.add(labelcasilla, j, i);
+                        listaLabels.add(new ElementoLabel(labelcasilla));
+                        listaCasillas.add(new ElementoCasilla(new Casilla(j, i)));
+                    }
+                }
+                ///Añadimos los individuos a cada casilla, y lo representamos en las labels
+                int x2 = modelo.getListaInicialIndividuos().getNumeroElementos();
+                for (int i = 0; i < x2; i++) {
+                    Individuo ind = modelo.getListaInicialIndividuos().getElemento(i).getData();
+                    int posx = ind.getPosX();
+                    int posy = ind.getPosY();
+                    listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().addIndividuo(ind);
+                    listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText("I");
+                }
+                comenzado = true;
+            } catch (FileNotFoundException exception) {
+                exception.printStackTrace();
             }
-            ///Añadimos los individuos a cada casilla, y lo representamos en las labels
-            int x2 = modelo.getListaInicialIndividuos().getNumeroElementos();
-            for (int i = 0; i < x2; i++) {
-                Individuo ind = modelo.getListaInicialIndividuos().getElemento(i).getData();
-                int posx = ind.getPosX();
-                int posy = ind.getPosY();
-                listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().addIndividuo(ind);
-                listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText("I");
-            }
-        } catch (FileNotFoundException exception) {
-            exception.printStackTrace();
+        }
+        else{
+            labelClickCasilla.setText("Reinicia si quieres comenzar");
         }
     }
 
@@ -187,8 +199,10 @@ public class JuegoController implements GsonUtilEjemplo {
             }
             pos++;
         }
+        ///No se por qué pero hay que hacer esta corrección
         pos = pos - 1;
         System.out.println("Posicion:" + pos);
+        labelClickCasilla.setText("Casilla pulsada: " + listaCasillas.getElemento(pos).getData().getPosX() + "," + listaCasillas.getElemento(pos).getData().getPosY());
         String indLayout = "";
         if (listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos() > 0) {
             for (int i = 0; i < listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos(); i++) {
@@ -203,7 +217,6 @@ public class JuegoController implements GsonUtilEjemplo {
             }
         }
         labelRecLayout.setText(recLayout);
-        System.out.println("Casilla clicada=" + listaCasillas.getElemento(pos).getData().getPosY() + "," + listaCasillas.getElemento(pos).getData().getPosX());
     }
 
     public void initialize() {
@@ -226,79 +239,13 @@ public class JuegoController implements GsonUtilEjemplo {
     @FXML
     public void onActualizarClick() throws NullPointerException {
         try {
-            if (pausado) {
                 propiedadesModelo.commit();
                 System.out.println(modelo);
-            } else {
-                System.out.println("Pausa primero");
             }
-        } catch (NullPointerException ex) {
+         catch (NullPointerException ex) {
             System.out.println("Comienza primero");
         }
     }
-
-    @FXML
-    public void onPausarContinuarClick() throws InterruptedException {
-        ///NullPointer
-//        if (pausado){
-//            pausado = false;
-//            PausarButton.setText("Pausar");
-//            int x3 = modelo.getListaInicialIndividuos().getNumeroElementos();
-//            while(!pausado){
-//            if (x3 >= 1) {
-//                for (int i = 0; i < x3; i++) {
-//                    Individuo ind = modelo.getListaInicialIndividuos().getElemento(i).getData();
-//                    if (ind.getVida() == 0) {
-//                        modelo.getListaInicialIndividuos().del(i);
-//                        int posx = ind.getPosX();
-//                        int posy = ind.getPosY();
-//                        listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().delIndividuo(ind);
-//                        listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().replaceFirst("I", ""));
-//                        i--;
-//                        x3--;
-//                    } else {
-//                        int posx = ind.getPosX();
-//                        int posy = ind.getPosY();
-//                        listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().delIndividuo(ind);
-//                        listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().replaceFirst("I", ""));
-//                        if(ind.getTipo().equals("Básico")) {
-//                            ind.movimientoBasic();
-//                            int posx2 = ind.getPosX();
-//                            int posy2 = ind.getPosY();
-//                            listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
-//                            listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
-//                            System.out.println("Iterando");
-//                            ind.setVida(ind.getVida() - 1);
-//                            if (ind.meClono()) {
-//                                System.out.println("Clonando");
-//                                Individuo ind2 = ind;
-//                                ind2.setGeneration(ind.getGeneration() + 1);
-//                                ind2.setId(contadorId);
-//                                contadorId++;
-//                                listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind2);
-//                                listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
-//                            }
-//                        }
-//                    }
-//                }
-//                try {
-//                    Thread.sleep(2000);
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            } else {
-//                System.out.println("Fin del juego");
-//                pausado=true;
-//            }}
-//
-//        }
-//        else if (!pausado){
-//            pausado = true;
-//            PausarButton.setText("Reanudar");
-//        }
-    }
-
-
     public void onBucleOrden() {
         int x3 = modelo.getListaInicialIndividuos().getNumeroElementos();
         ///Comprobamos si ha terminado la partida
@@ -459,7 +406,7 @@ public class JuegoController implements GsonUtilEjemplo {
                     int posx2 = ind.getPosX();
                     int posy2 = ind.getPosY();
 
-                    Individuo ind2 = new Individuo(contadorId, ind.getGeneration() + 1, ind.getVida(), ind.getProbRepro(), ind.getProbClon(), ind.getProbMuerte(), posx2, posy2, ind.getTipo());
+                    Individuo ind2 = new Individuo(contadorId, contadorTurno, ind.getVida(), ind.getProbRepro(), ind.getProbClon(), ind.getProbMuerte(), posx2, posy2, ind.getTipo());
                     contadorId++;
                     modelo.getListaInicialIndividuos().add(new ElementoInd(ind2));
                     listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind2);
@@ -545,8 +492,9 @@ public class JuegoController implements GsonUtilEjemplo {
             for (int p = 0; p < modelo.getListaInicialIndividuos().getNumeroElementos(); p++) {
                 choiceId.getItems().add(modelo.getListaInicialIndividuos().getElemento(p).getData().getId());
             }
+            labelTurnoLayout.setText("Turno:" + contadorTurno);
         } else {
-            System.out.println("fin partida");
+            labelTurnoLayout.setText("Turno:" + contadorTurno + ", partida finalizada");
         }
     }
 
@@ -579,11 +527,142 @@ public class JuegoController implements GsonUtilEjemplo {
                     } else {
                         labelInfoInterac.setText("La casilla ya está llena de recursos");
                     }
+                } else if (choiceClase.getValue().equals("IndivBásico") || choiceClase.getValue().equals("IndivAvanzado") || choiceClase.getValue().equals("IndivNormal")) {
+                    if (listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaIndividuos().getNumeroElementos() < 3) {
+                        if (choiceClase.getValue().equals("IndivBásico")) {
+                            IndivBasico ind = new IndivBasico(30, 8, 30, contadorId, choicePosX.getValue(), choicePosY.getValue());
+                            modelo.getListaInicialIndividuos().add(new ElementoInd(ind));
+                            listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaIndividuos().add(new ElementoInd(ind));
+                            listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "I");
+                        } else if (choiceClase.getValue().equals("IndivNormal")) {
+                            IndivNormal ind = new IndivNormal(30, 8, 30, contadorId, choicePosX.getValue(), choicePosY.getValue());
+                            modelo.getListaInicialIndividuos().add(new ElementoInd(ind));
+                            listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaIndividuos().add(new ElementoInd(ind));
+                            listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "I");
+                        } else if (choiceClase.getValue().equals("IndivAvanzado")) {
+                            IndivAvanzado ind = new IndivAvanzado(30, 8, 30, contadorId, choicePosX.getValue(), choicePosY.getValue());
+                            modelo.getListaInicialIndividuos().add(new ElementoInd(ind));
+                            listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaIndividuos().add(new ElementoInd(ind));
+                            listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "I");
+                        }
+                        labelInfoInterac.setText("Individuo añadido a la posición: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                        contadorId++;
+                    } else {
+                        labelInfoInterac.setText("La casilla ya está llena de individuos");
+                    }
+
+
                 }
-//                if(choiceClase.getValue().equals("IndivBásico")){
-//                    IndivBasico ind = new IndivBasico(modelo.get)
-//
-//                }
+            } else if (choiceAccion.getValue().equals("Borrar")) {
+                ///Borrada de recursos
+                if (choiceClase.getValue().equals("Agua") || choiceClase.getValue().equals("Comida") || choiceClase.getValue().equals("Montaña") || choiceClase.getValue().equals("Tesoro")
+                        || choiceClase.getValue().equals("Biblioteca") || choiceClase.getValue().equals("Pozo")) {
+                    if (listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos() > 0) {
+                        boolean actuado = false;
+                        if (choiceClase.getValue().equals("Agua")) {
+                            for(int k = 0; k < listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos(); k++){
+                                if(listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getElemento(k).getData() instanceof Agua){
+                                    actuado = true;
+                                    listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().del(k);
+                                    listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getText().replaceFirst("A", ""));
+                                }
+                                if(actuado){
+                                    labelInfoInterac.setText("Aguas eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                }
+                            }
+                        }
+                        else if (choiceClase.getValue().equals("Comida")) {
+                            for(int k = 0; k < listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos(); k++){
+                                if(listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getElemento(k).getData() instanceof Comida){
+                                    actuado = true;
+                                    listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().del(k);
+                                    listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getText().replaceFirst("C", ""));
+                                }
+                                if(actuado){
+                                    labelInfoInterac.setText("Comidas eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                }
+                            }
+                        }
+                        else if (choiceClase.getValue().equals("Montaña")) {
+                            for(int k = 0; k < listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos(); k++){
+                                if(listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getElemento(k).getData() instanceof Montania){
+                                    actuado = true;
+                                    listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().del(k);
+                                    listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getText().replaceFirst("M", ""));
+                                }
+                                if(actuado){
+                                    labelInfoInterac.setText("Montañas eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                }
+                            }
+                        }
+                        else if (choiceClase.getValue().equals("Tesoro")) {
+                            for(int k = 0; k < listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos(); k++){
+                                if(listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getElemento(k).getData() instanceof Tesoro){
+                                    actuado = true;
+                                    listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().del(k);
+                                    listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getText().replaceFirst("T", ""));
+                                }
+                                if(actuado){
+                                    labelInfoInterac.setText("Tesoros eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                }
+                            }
+                        }
+                        else if (choiceClase.getValue().equals("Biblioteca")) {
+                            for(int k = 0; k < listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos(); k++){
+                                if(listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getElemento(k).getData() instanceof Biblioteca){
+                                    actuado = true;
+                                    listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().del(k);
+                                    listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getText().replaceFirst("B", ""));
+                                }
+                                if(actuado){
+                                    labelInfoInterac.setText("Bibliotecas eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                }
+                            }
+                        }
+                        else if (choiceClase.getValue().equals("Pozos")) {
+                            for(int k = 0; k < listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos(); k++){
+                                if(listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getElemento(k).getData() instanceof Pozo){
+                                    actuado = true;
+                                    listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().del(k);
+                                    listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getText().replaceFirst("P", ""));
+                                }
+                                if(actuado){
+                                    labelInfoInterac.setText("Pozos eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                }
+                            }
+                        }
+                        if (!actuado){
+                            labelInfoInterac.setText("Seleccione un recurso que haya");
+                        }
+                    }
+                    else{
+                        labelInfoInterac.setText("No hay recursos ahí");
+                    }
+                }
+                ///Borrada de individuos
+                else if (choiceClase.getValue().equals("IndivBásico") || choiceClase.getValue().equals("IndivAvanzado") || choiceClase.getValue().equals("IndivNormal")) {
+                    Individuo ind = null;
+                    boolean exit = false;
+                    int counter = 0;
+                    while (!exit){
+                        if(modelo.getListaInicialIndividuos().getElemento(counter).getData().getId() == choiceId.getValue()){
+                            ind = modelo.getListaInicialIndividuos().getElemento(counter).getData();
+                            modelo.getListaInicialIndividuos().del(counter);
+                            exit =true;
+                        }
+                        counter++;
+                    }
+                    ///Lo borramos también de la casilla y de la label
+                    int posx = ind.getPosX();
+                    int posy = ind.getPosY();
+                    for(int num = 0; num < listaCasillas.getElemento(conversorPosicion(posx,posy)).getData().getListaIndividuos().getNumeroElementos(); num++){
+                        if(listaCasillas.getElemento(conversorPosicion(posx,posy)).getData().getListaIndividuos().getElemento(num).getData().getId() == ind.getId()){
+                            listaCasillas.getElemento(conversorPosicion(posx,posy)).getData().getListaIndividuos().del(num);
+                        }
+                    }
+                    listaLabels.getElemento(conversorPosicion(posx,posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx,posy)).getData().getText().replaceFirst("I", ""));
+                    labelInfoInterac.setText("Individuo con id:" + choiceId.getValue() + " borrado de la casilla: " + ind.getPosX() +","+ ind.getPosY());
+                }
             }
         } catch (NullPointerException exception) {
             labelInfoInterac.setText("Error, por favor haga una selección válida");

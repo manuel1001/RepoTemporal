@@ -56,6 +56,16 @@
                         <Font name="Copperplate Gothic Light" size="13.0" />
                      </font>
                   </Text>
+                  <Label fx:id="labelClickCasilla" alignment="CENTER" layoutX="483.0" layoutY="362.0" prefHeight="37.0" prefWidth="174.0" textOverrun="CLIP">
+                     <font>
+                        <Font name="Bookman Old Style" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTurnoLayout" alignment="CENTER" layoutX="45.0" layoutY="372.0" prefHeight="71.0" prefWidth="276.0" textAlignment="CENTER" textOverrun="CLIP">
+                     <font>
+                        <Font name="Copperplate Gothic Light" size="12.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
       </content>
     </Tab>
@@ -225,7 +235,7 @@
                                  </font>
                               </Text>
                               <Button layoutX="581.0" layoutY="91.0" mnemonicParsing="false" onAction="#onInteractuarClick" text="Interactuar" />
-                              <Label fx:id="labelInfoInterac" layoutX="305.0" layoutY="96.0" prefHeight="75.0" prefWidth="226.0" textAlignment="CENTER" textOverrun="CLIP">
+                              <Label fx:id="labelInfoInterac" alignment="CENTER" layoutX="305.0" layoutY="96.0" prefHeight="75.0" prefWidth="243.0" textAlignment="CENTER" textOverrun="CLIP">
                                  <font>
                                     <Font name="Bookman Old Style" size="10.0" />
                                  </font>
