@@ -540,6 +540,17 @@ public class JuegoController implements GsonUtilEjemplo {
                 choiceId.getItems().add(modelo.getListaInicialIndividuos().getElemento(p).getData().getId());
             }
             labelTurnoLayout.setText("Turno:" + contadorTurno);
+            //Descuento del 10% a cada individuo en reproducción y clonación.
+            for(int j =0; j < modelo.getListaInicialIndividuos().getNumeroElementos(); j++){
+                modelo.getListaInicialIndividuos().getElemento(j).getData().setProbRepro(modelo.getListaInicialIndividuos().getElemento(j).getData().getProbRepro() - 10);
+                modelo.getListaInicialIndividuos().getElemento(j).getData().setProbClon(modelo.getListaInicialIndividuos().getElemento(j).getData().getProbClon() - 10);
+                if(modelo.getListaInicialIndividuos().getElemento(j).getData().getProbRepro() <0){
+                    modelo.getListaInicialIndividuos().getElemento(j).getData().setProbRepro(0);
+                }
+                if(modelo.getListaInicialIndividuos().getElemento(j).getData().getProbClon() <0){
+                    modelo.getListaInicialIndividuos().getElemento(j).getData().setProbClon(0);
+                }
+            }
         } else {
             labelTurnoLayout.setText("Turno:" + contadorTurno + ", partida finalizada");
         }

@@ -15,6 +15,7 @@ public class Individuo {
     private int posX;
 
     private int posY;
+    ///El argumento arbolGenealógico surge como necesidad
 
     public Recurso getRecursoObj() {
         return recursoObj;
