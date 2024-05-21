@@ -5,6 +5,7 @@ public class Tesoro extends Recurso{
     public Tesoro(int aumentoTesoro,int posX, int posY) {
         super(posX, posY);
         this.aumentoTesoro = aumentoTesoro;
+        this.setId("T");
     }
     public String toString(){
         return "{Tesoro= aumento:" + aumentoTesoro + super.toString();

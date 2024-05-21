@@ -1,14 +1,11 @@
 package org.example.paquete;
 
 import javafx.event.EventHandler;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.Individuo;
@@ -77,8 +74,6 @@ public class JuegoController implements GsonUtilEjemplo {
     ///Boolean para no comenzar dos veces
     private boolean comenzado = false;
 
-
-
     ///Interactuar con las posiciones
     @FXML
     private ChoiceBox<String> choiceAccion;
@@ -107,6 +102,11 @@ public class JuegoController implements GsonUtilEjemplo {
     @FXML
     private Label labelRecLayout;
     private int contadorTurno = 0;
+    ///Ajustes Guardar Partida
+    @FXML
+    private Label labelGuardadaPartida;
+    @FXML
+    private TextField fieldGuardadaParitda;
 
     ///Methods
     public void setNombreJuego(String nombreJuego) {
@@ -117,11 +117,10 @@ public class JuegoController implements GsonUtilEjemplo {
     public void onComenzarClick() {
         if (!comenzado) {
             try {
-                if (this.nombreJuego == null) {
-                    this.nombreJuego = "normalitos.json";
+                if (this.modelo == null) {
+                    this.modelo = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombreJuego, Partida.class);
                 }
                 ///Iniciamos el modelo y sus properties desde le Json
-                this.modelo = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombreJuego, Partida.class);
                 propiedadesModelo = new PartidaProperties(modelo);
                 sliderAumentoBiblio.valueProperty().bindBidirectional(propiedadesModelo.aumentoBiblioProperty());
                 sliderAumentoTesoro.valueProperty().bindBidirectional(propiedadesModelo.aumentoTesoroProperty());
@@ -172,6 +171,54 @@ public class JuegoController implements GsonUtilEjemplo {
                     int posy = ind.getPosY();
                     listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().addIndividuo(ind);
                     listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText("I");
+                }
+                ///Añadimos los recursos si existian
+                if(modelo.getTodosRecuros() != null){
+                    int x3 = modelo.getTodosRecuros().getNumeroElementos();
+                    for(int m = 0; m < x3; m++){
+                        if (modelo.getTodosRecuros().getElemento(m).getData().getId().equals("A")){
+                            Agua agua = new Agua(modelo.getTodosRecuros().getElemento(m).getData().getVida(),modelo.getTodosRecuros().getElemento(m).getData().getPosX(), modelo.getTodosRecuros().getElemento(m).getData().getPosY());
+                            int posx = agua.getPosX();
+                            int posy = agua.getPosY();
+                            listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().getListaRecursos().add(new ElementoRec(agua));
+                            listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText() + "A");
+                        }
+                        else if (modelo.getTodosRecuros().getElemento(m).getData().getId().equals("C")){
+                            Comida comida = new Comida(modelo.getTodosRecuros().getElemento(m).getData().getVida(),modelo.getTodosRecuros().getElemento(m).getData().getPosX(), modelo.getTodosRecuros().getElemento(m).getData().getPosY());
+                            int posx = comida.getPosX();
+                            int posy = comida.getPosY();
+                            listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().getListaRecursos().add(new ElementoRec(comida));
+                            listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText() + "C");
+                        }
+                        else if (modelo.getTodosRecuros().getElemento(m).getData().getId().equals("M")){
+                            Montania mont = new Montania(modelo.getTodosRecuros().getElemento(m).getData().getVida(),modelo.getTodosRecuros().getElemento(m).getData().getPosX(), modelo.getTodosRecuros().getElemento(m).getData().getPosY());
+                            int posx = mont.getPosX();
+                            int posy = mont.getPosY();
+                            listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().getListaRecursos().add(new ElementoRec(mont));
+                            listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText() + "M");
+                        }
+                        else if (modelo.getTodosRecuros().getElemento(m).getData().getId().equals("T")){
+                            Tesoro tesoro = new Tesoro(modelo.getAumentoTesoro(),modelo.getTodosRecuros().getElemento(m).getData().getPosX(), modelo.getTodosRecuros().getElemento(m).getData().getPosY());
+                            int posx = tesoro.getPosX();
+                            int posy = tesoro.getPosY();
+                            listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().getListaRecursos().add(new ElementoRec(tesoro));
+                            listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText() + "T");
+                        }
+                        else if (modelo.getTodosRecuros().getElemento(m).getData().getId().equals("B")){
+                            Biblioteca bilbio = new Biblioteca(modelo.getAumentoBiblio(), modelo.getTodosRecuros().getElemento(m).getData().getPosX(), modelo.getTodosRecuros().getElemento(m).getData().getPosY());
+                            int posx = bilbio.getPosX();
+                            int posy = bilbio.getPosY();
+                            listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().getListaRecursos().add(new ElementoRec(bilbio));
+                            listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText() + "B");
+                        }
+                        else if (modelo.getTodosRecuros().getElemento(m).getData().getId().equals("P")){
+                            Pozo pozo = new Pozo(modelo.getTodosRecuros().getElemento(m).getData().getPosX(), modelo.getTodosRecuros().getElemento(m).getData().getPosY());
+                            int posx = pozo.getPosX();
+                            int posy = pozo.getPosY();
+                            listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().getListaRecursos().add(new ElementoRec(pozo));
+                            listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText() + "P");
+                        }
+                    }
                 }
                 comenzado = true;
             } catch (FileNotFoundException exception) {
@@ -667,6 +714,27 @@ public class JuegoController implements GsonUtilEjemplo {
         } catch (NullPointerException exception) {
             labelInfoInterac.setText("Error, por favor haga una selección válida");
         }
-
+    }
+    public void onGuardarPartidaClick(){
+        if (!fieldGuardadaParitda.getText().trim().isEmpty() && !Objects.equals(fieldGuardadaParitda.getText(), "")){
+            ListaRecursos listaRecursos = new ListaRecursos();
+            for(int i =0; i < listaCasillas.getNumeroElementos(); i++){
+                if(listaCasillas.getElemento(i).getData().getListaRecursos().getNumeroElementos() > 0){
+                    for(int j=0; j<listaCasillas.getElemento(i).getData().getListaRecursos().getNumeroElementos(); j++){
+                        listaRecursos.add(new ElementoRec(listaCasillas.getElemento(i).getData().getListaRecursos().getElemento(j).getData()));
+                    }
+                }
+                System.out.println("Iterando");
+            }
+            System.out.println("salgo del bucle");
+            modelo.setTodosRecuros(listaRecursos);
+            modelo.setArchivoNombre(fieldGuardadaParitda.getText());
+            GsonUtilEjemplo.guardarObjetoEnArchivo(fieldGuardadaParitda.getText() + ".json", modelo);
+            labelGuardadaPartida.setText("Partida guardada");
+            System.out.println("Llego al final");
+        }
+    }
+    public void setModelo(Partida modelo){
+        this.modelo = modelo;
     }
 }

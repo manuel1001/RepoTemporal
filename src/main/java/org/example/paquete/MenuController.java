@@ -102,7 +102,7 @@ public class MenuController implements GsonUtilEjemplo{
     @FXML
     private TextField fieldNombrePartida;
     @FXML
-    public void onNuevaPartidaClick() {
+    public void onGuardarPlantillaClick() {
         if (fieldNombrePartida.getText().trim().isEmpty()) {
             labelNuevaPartida.textProperty().set("Selecciona un nombre válido para tu partida");
         } else {
@@ -122,9 +122,31 @@ public class MenuController implements GsonUtilEjemplo{
             }
         }
     }
+    @FXML
+    public void onComenzarDeUnaClick() throws IOException {
+        try {
+            Partida nuevaPartida = new Partida(fieldNombrePartida.getText(), (int) sliderProbAgua.getValue(),
+                    (int) sliderTurnAgua.getValue(), (int) sliderProbCom.getValue(), (int) sliderTurnCom.getValue(),
+                    (int) sliderProbMont.getValue(), (int) sliderTurnMont.getValue(), (int) sliderProbBiblio.getValue(),
+                    (int) sliderAumentoBiblio.getValue(), (int) sliderProbTesoro.getValue(), (int) sliderAumentoTesoro.getValue(),
+                    (int) sliderProbPozo.getValue(), this.listaIndividuos, (int) sliderMapCol.getValue(), (int) sliderMapRows.getValue(), (int) sliderProbRecursos.getValue());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("juego-view.fxml"));
+            Parent root = loader.load();
+            JuegoController controlador2 = loader.getController();
+            System.out.println("Enviado:" + labelNuevaPartida.getText());
+            controlador2.setModelo(nuevaPartida);
+            Stage nuevaStage = new Stage();
+            nuevaStage.setTitle("Juego");
+            nuevaStage.setScene(new Scene(root));
+            nuevaStage.show();
+        } catch (IOException ex) {
+            System.out.println("Error");
+        }
+    }
+
 
     @FXML
-    public void onIniciarPartidaClick() throws IOException {
+    public void onIniciarPartidaCargadaClick() throws IOException {
         if(labelNuevaPartida.getText() == "" || labelNuevaPartida.getText() == "Selecciona un nombre válido para tu partida"  || labelNuevaPartida.getText() == "Error al cargar partida"){
             labelNuevaPartida.textProperty().set("Selecciona un nombre válido para tu partida");
         }

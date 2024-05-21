@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
@@ -238,6 +239,26 @@
                               <Label fx:id="labelInfoInterac" alignment="CENTER" layoutX="305.0" layoutY="96.0" prefHeight="75.0" prefWidth="243.0" textAlignment="CENTER" textOverrun="CLIP">
                                  <font>
                                     <Font name="Bookman Old Style" size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Guardar">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Button layoutX="111.0" layoutY="61.0" mnemonicParsing="false" onAction="#onGuardarPartidaClick" text="Guardar" />
+                              <TextField fx:id="fieldGuardadaParitda" alignment="CENTER" layoutX="203.0" layoutY="61.0" promptText="introduce aquí" />
+                              <Text layoutX="209.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de la partida">
+                                 <font>
+                                    <Font name="Copperplate Gothic Light" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Label fx:id="labelGuardadaPartida" layoutX="377.0" layoutY="65.0" prefHeight="17.0" prefWidth="243.0">
+                                 <font>
+                                    <Font name="Bookman Old Style" size="12.0" />
                                  </font>
                               </Label>
                            </children>

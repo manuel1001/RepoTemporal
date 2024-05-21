@@ -7,6 +7,7 @@ public class Pozo extends Recurso {
 
     public Pozo(int posX, int posY) {
         super(posX, posY);
+        this.setId("P");
     }
 
     public String toString() {
