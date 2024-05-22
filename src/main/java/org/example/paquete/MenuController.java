@@ -199,7 +199,7 @@ public class MenuController implements GsonUtilEjemplo{
     }
     @FXML
     public void onGuardarIndividuoClick() {
-        if (listaIndividuos.getNumeroElementos() < 5) {
+        if (listaIndividuos.getNumeroElementos() < 15) {
             if (choiceIndividuo.getSelectionModel().getSelectedItem() == "Básico"){
                 int id = this.contIndiv + 1;
                 Random rand = new Random();
@@ -236,7 +236,7 @@ public class MenuController implements GsonUtilEjemplo{
             labelNumInd.textProperty().setValue(String.valueOf(this.contIndiv));
         }
         else {
-            labelNumInd.textProperty().setValue("5, individuo no admitido");
+            labelNumInd.textProperty().setValue("15, individuo no admitido");
             System.out.println("Lista de individuos llena");
         }
     }

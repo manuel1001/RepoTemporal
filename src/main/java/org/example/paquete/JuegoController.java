@@ -413,6 +413,51 @@ public class JuegoController implements GsonUtilEjemplo {
                         System.out.println("Me muevo basico siendo normal");
                     }
                 }
+                if (ind.getTipo().equals("Avanzado")) {
+                    if (contadorTurno != 0) {
+                    if (ind.getRecursoObj() == null || ind.getRecursoObj().getDuracion() == 0 || (ind.getRecursoObj().getPosY() == ind.getPosY() && ind.getRecursoObj().getPosX() == ind.getPosX())) {
+                        double moduloDistanciaMin = 100;
+                        for (int p = 0; p < listaCasillas.getNumeroElementos(); p++) {
+                            if (listaCasillas.getElemento(p).getData().getListaRecursos().getNumeroElementos() > 0) {
+                                for (int j = 0; j < listaCasillas.getElemento(p).getData().getListaRecursos().getNumeroElementos(); j++) {
+                                    double disx = listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData().getPosX();
+                                    double disy = listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData().getPosY();
+                                    if (Math.sqrt((disx * disx) + (disy * disy) ) <= moduloDistanciaMin){
+                                        System.out.println("Cambiando objetivo por uno más cercano");
+                                        moduloDistanciaMin = Math.sqrt((disx * disx) + (disy * disy));
+                                        ind.setRecursoObj(listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ///Ahora nos movemos hacia él
+                    if (ind.getRecursoObj().getPosX() < ind.getPosX()) {
+                        ind.setPosX(ind.getPosX() - 1);
+                    }
+                    if (ind.getRecursoObj().getPosX() > ind.getPosX()) {
+                        ind.setPosX(ind.getPosX() + 1);
+                    }
+                    if (ind.getRecursoObj().getPosY() > ind.getPosY()) {
+                        ind.setPosX(ind.getPosX() + 1);
+                    }
+                    if (ind.getRecursoObj().getPosY() < ind.getPosY()) {
+                        ind.setPosX(ind.getPosX() - 1);
+                    }
+                    int posx2 = ind.getPosX();
+                    int posy2 = ind.getPosY();
+                    listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
+                    listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
+                }
+                    else{
+                        ind.movimientoBasic();
+                        int posx2 = ind.getPosX();
+                        int posy2 = ind.getPosY();
+                        listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
+                        listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
+                        System.out.println("Me muevo basico siendo avanzado");
+                    }
+                }
             }
             ///4. Mejoras obtenidas por los recursos de la posicion nueva
             for (int i = 0; i < x4; i++) {
