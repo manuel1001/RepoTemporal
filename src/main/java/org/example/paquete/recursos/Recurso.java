@@ -5,6 +5,9 @@ public class Recurso {
     private int posX;
     private int posY;
 
+    ///El parametro id nace como necesidad de cargar los recursos desde el json
+    private String id;
+
     public int getVida() {
         return vida;
     }
@@ -37,14 +40,6 @@ public class Recurso {
         this.duracion = 3;
     }
 
-    public int getTurnos() {
-        return vida;
-    }
-
-    public void setTurnos(int turnos) {
-        this.vida = turnos;
-    }
-
     public int getPosX() {
         return posX;
     }
@@ -59,5 +54,14 @@ public class Recurso {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getId() {
+        return id;
+    }
+    public String toString(){
+        return ",turnos: " + duracion + "} ";
     }
 }

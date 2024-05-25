@@ -27,26 +27,21 @@ public class Partida {
     ///Datos del mapa
     private int numeroColumnas;
     private int numeroFilas;
+    private ListaRecursos todosRecuros;
 
-    public ListaInd getListaInicialIndividuos() {
-        return listaInicialIndividuos;
-    }
 
     ///Individuos
     private ListaInd listaInicialIndividuos;
-
-    public int getAparicionRecurso() {
-        return aparicionRecurso;
-    }
 
     public void setAparicionRecurso(int aparicionRecurso) {
         this.aparicionRecurso = aparicionRecurso;
     }
 
     ///Methods
-    public Partida(){
+    public Partida() {
 
     }
+
     public Partida(String archivoNombre, int aparicionAgua, int turnosAgua, int aparicionComida, int turnosComida,
                    int aparicionMontania, int turnosMontania, int aparicionBiblio, int aumentoBiblio, int aparicionTesoro, int aumentoTesoro, int aparicionPozo, ListaInd listaInicialIndividuos, int numeroColumnas, int numeroFilas, int aparicionRecurso) {
         this.archivoNombre = archivoNombre;
@@ -207,6 +202,19 @@ public class Partida {
 
     public void setNumeroFilas(int numeroFilas) {
         this.numeroFilas = numeroFilas;
+    }
+    public int getAparicionRecurso() {
+        return aparicionRecurso;
+    }
+    public ListaInd getListaInicialIndividuos() {
+        return listaInicialIndividuos;
+    }
+    public ListaRecursos getTodosRecuros() {
+        return todosRecuros;
+    }
+
+    public void setTodosRecuros(ListaRecursos todosRecuros) {
+        this.todosRecuros = todosRecuros;
     }
 
     @Override

@@ -12,9 +12,13 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.*;
 public class MenuController implements GsonUtilEjemplo{
+    private static final Logger log = LogManager.getLogger(MenuController.class);
 
     ///Label y sliders
     @FXML
@@ -102,7 +106,7 @@ public class MenuController implements GsonUtilEjemplo{
     @FXML
     private TextField fieldNombrePartida;
     @FXML
-    public void onNuevaPartidaClick() {
+    public void onGuardarPlantillaClick() {
         if (fieldNombrePartida.getText().trim().isEmpty()) {
             labelNuevaPartida.textProperty().set("Selecciona un nombre válido para tu partida");
         } else {
@@ -116,20 +120,48 @@ public class MenuController implements GsonUtilEjemplo{
                 GsonUtilEjemplo.guardarObjetoEnArchivo(nombrePartida, nuevaPartida);
                 Partida cargaPartida = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombrePartida, Partida.class);
                 String nombreCarga = cargaPartida.getArchivoNombre() + ".json";
-                labelNuevaPartida.textProperty().set(nombreCarga);}
+                labelNuevaPartida.textProperty().set(nombreCarga);
+            log.info("El usuario ha guardado su plantilla");
+            }
+
             catch (FileNotFoundException exception){
                 labelNuevaPartida.textProperty().set("Error al cargar partida");
             }
         }
     }
+    @FXML
+    public void onComenzarDeUnaClick() throws IOException {
+        try {
+            Partida nuevaPartida = new Partida(fieldNombrePartida.getText(), (int) sliderProbAgua.getValue(),
+                    (int) sliderTurnAgua.getValue(), (int) sliderProbCom.getValue(), (int) sliderTurnCom.getValue(),
+                    (int) sliderProbMont.getValue(), (int) sliderTurnMont.getValue(), (int) sliderProbBiblio.getValue(),
+                    (int) sliderAumentoBiblio.getValue(), (int) sliderProbTesoro.getValue(), (int) sliderAumentoTesoro.getValue(),
+                    (int) sliderProbPozo.getValue(), this.listaIndividuos, (int) sliderMapCol.getValue(), (int) sliderMapRows.getValue(), (int) sliderProbRecursos.getValue());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("juego-view.fxml"));
+            Parent root = loader.load();
+            JuegoController controlador2 = loader.getController();
+            System.out.println("Enviado:" + labelNuevaPartida.getText());
+            controlador2.setModelo(nuevaPartida);
+            Stage nuevaStage = new Stage();
+            nuevaStage.setTitle("Juego");
+            nuevaStage.setScene(new Scene(root));
+            nuevaStage.show();
+            Stage esteStage = (Stage) sliderProbAgua.getScene().getWindow();
+            esteStage.close();
+            log.info("El usuario ha comenzado sin guardar su plantilla");
+        } catch (IOException ex) {
+            log.fatal("No se puede arrancar el juego");
+        }
+    }
+
 
     @FXML
-    public void onIniciarPartidaClick() throws IOException {
+    public void onIniciarPartidaCargadaClick() throws IOException {
         if(labelNuevaPartida.getText() == "" || labelNuevaPartida.getText() == "Selecciona un nombre válido para tu partida"  || labelNuevaPartida.getText() == "Error al cargar partida"){
             labelNuevaPartida.textProperty().set("Selecciona un nombre válido para tu partida");
+            log.warn("El usuario ha introducido un nombre de partida que no existe");
         }
         else{
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("juego-view.fxml"));
             Parent root = loader.load();
             JuegoController controlador2 = loader.getController();
@@ -139,6 +171,9 @@ public class MenuController implements GsonUtilEjemplo{
             nuevaStage.setTitle("Juego");
             nuevaStage.setScene(new Scene(root));
             nuevaStage.show();}
+        Stage esteStage = (Stage) sliderProbAgua.getScene().getWindow();
+        esteStage.close();
+        log.info("El usuario ha iniciado una partida desde un archivo, cerrando menú");
     }
     @FXML
     public void onCargarPartidaClick() throws IOException {
@@ -146,13 +181,14 @@ public class MenuController implements GsonUtilEjemplo{
             Partida cargaPartida = GsonUtilEjemplo.cargarObjetoDesdeArchivo(fieldNombrePartida.getText() + ".json", Partida.class);
             labelNuevaPartida.textProperty().set(cargaPartida.getArchivoNombre() + ".json");
         } catch (NullPointerException ex) {
-            labelNuevaPartida.textProperty().set("Error al cargar partida");
+            log.warn("El usuario ha introducido un nombre de partida que no existe");
         } catch (FileNotFoundException ex){
             labelNuevaPartida.textProperty().set("Error al cargar partida");
         }
     }
 
     public void initialize() {
+        log.info("Cargando el menú");
         ///Relacionando las labels con los sliders para hacer una mejor interfaz
         labelMapCol.textProperty().bind(sliderMapCol.valueProperty().asString());
         labelProbMont.textProperty().bind(sliderProbMont.valueProperty().asString());
@@ -177,7 +213,7 @@ public class MenuController implements GsonUtilEjemplo{
     }
     @FXML
     public void onGuardarIndividuoClick() {
-        if (listaIndividuos.getNumeroElementos() < 5) {
+        if (listaIndividuos.getNumeroElementos() < 15) {
             if (choiceIndividuo.getSelectionModel().getSelectedItem() == "Básico"){
                 int id = this.contIndiv + 1;
                 Random rand = new Random();
@@ -209,13 +245,13 @@ public class MenuController implements GsonUtilEjemplo{
                 contIndiv++;
             }
             else{
-                System.out.println("error");
+                log.warn("Error al crear un individuo");
             }
             labelNumInd.textProperty().setValue(String.valueOf(this.contIndiv));
         }
         else {
-            labelNumInd.textProperty().setValue("5, individuo no admitido");
-            System.out.println("Lista de individuos llena");
+            labelNumInd.textProperty().setValue("15, individuo no admitido");
+            log.warn("Capacidad inicial de individuos máxima alcanza, individuo no admitido");
         }
     }
 }

@@ -1,0 +1,248 @@
+2024-05-25 16:30:22.597 - INFO  - org.example.paquete.MenuController - Cargando el menú
+2024-05-25 16:30:37.442 - INFO  - org.example.paquete.JuegoController - Inicio del método de arranque de la aplicación para mostrar un grid de forma programática
+2024-05-25 18:08:59.844 - INFO  - org.example.paquete.MenuController - Cargando el menú
+2024-05-25 18:09:12.869 - INFO  - org.example.paquete.JuegoController - Cargamos las properties para la modificación de datos
+2024-05-25 18:09:14.158 - INFO  - org.example.paquete.JuegoController - Inicio del método de arranque de la aplicación para mostrar un grid de forma programática
+2024-05-25 18:09:14.209 - INFO  - org.example.paquete.JuegoController - GridPane creado
+2024-05-25 18:09:14.212 - INFO  - org.example.paquete.JuegoController - Individuos añadidos al Gridpane
+2024-05-25 18:09:15.333 - INFO  - org.example.paquete.JuegoController - Comenzamos el bucle de turno
+2024-05-25 18:09:15.334 - INFO  - org.example.paquete.JuegoController - Se actualiza el contador de vida de los individuos
+2024-05-25 18:09:15.334 - INFO  - org.example.paquete.JuegoController - Tiempo de vida del resto de los recursos actualizado
+2024-05-25 18:09:15.337 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 1 se ha movido a 9,6
+2024-05-25 18:09:15.338 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 2 se ha movido a 2,3
+2024-05-25 18:09:15.338 - WARN  - org.example.paquete.JuegoController - Un individuo normal ha hecho movimiento básico porque no había recursos
+2024-05-25 18:09:15.338 - WARN  - org.example.paquete.JuegoController - Un individuo normal ha hecho movimiento básico porque no había recursos
+2024-05-25 18:09:15.338 - WARN  - org.example.paquete.JuegoController - Un individuo avanzado ha hecho movimiento básico porque no había recursos
+2024-05-25 18:09:15.338 - WARN  - org.example.paquete.JuegoController - Un individuo avanzado ha hecho movimiento básico porque no había recursos
+2024-05-25 18:09:15.339 - INFO  - org.example.paquete.JuegoController - El individuo de id 1se ha clonado dando lugar al individuo de id7
+2024-05-25 18:09:15.340 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 5,1
+2024-05-25 18:09:15.340 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 3,2
+2024-05-25 18:09:15.341 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 4,2
+2024-05-25 18:09:15.341 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 9,2
+2024-05-25 18:09:15.341 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 6,4
+2024-05-25 18:09:15.341 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 3,5
+2024-05-25 18:09:15.341 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 4,5
+2024-05-25 18:09:15.342 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 5,5
+2024-05-25 18:09:15.343 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 7,5
+2024-05-25 18:09:15.343 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 9,5
+2024-05-25 18:09:15.343 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 10,5
+2024-05-25 18:09:15.343 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 3,7
+2024-05-25 18:09:15.345 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 4,7
+2024-05-25 18:09:15.345 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 6,7
+2024-05-25 18:09:15.345 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 8,7
+2024-05-25 18:09:15.347 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 2,8
+2024-05-25 18:09:15.347 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 6,8
+2024-05-25 18:09:15.347 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 12,8
+2024-05-25 18:09:15.347 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 4,9
+2024-05-25 18:09:15.347 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 6,9
+2024-05-25 18:09:15.348 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 7,9
+2024-05-25 18:09:15.348 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 8,9
+2024-05-25 18:09:15.349 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 6,10
+2024-05-25 18:09:15.349 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 2,11
+2024-05-25 18:09:15.349 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 11,11
+2024-05-25 18:09:15.349 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 9,12
+2024-05-25 18:09:15.353 - INFO  - org.example.paquete.JuegoController - Se ha restado 10% en las probabilidades de cada individuo
+2024-05-25 18:09:16.418 - INFO  - org.example.paquete.JuegoController - Comenzamos el bucle de turno
+2024-05-25 18:09:16.418 - INFO  - org.example.paquete.JuegoController - Se actualiza el contador de vida de los individuos
+2024-05-25 18:09:16.418 - INFO  - org.example.paquete.JuegoController - Tiempo de vida del resto de los recursos actualizado
+2024-05-25 18:09:16.419 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 1 se ha movido a 10,7
+2024-05-25 18:09:16.419 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 2 se ha movido a 1,4
+2024-05-25 18:09:16.419 - INFO  - org.example.paquete.JuegoController - Individuo normal de id 3 se ha movido a 4,4
+2024-05-25 18:09:16.419 - INFO  - org.example.paquete.JuegoController - Individuo normal de id 4 se ha movido a 4,3
+2024-05-25 18:09:16.421 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 5ha cambiado su recurso objetivo, se dirige a: 3,2
+2024-05-25 18:09:16.421 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 5 se ha movido a 3,3
+2024-05-25 18:09:16.421 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 6ha cambiado su recurso objetivo, se dirige a: 3,2
+2024-05-25 18:09:16.422 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 6 se ha movido a 6,3
+2024-05-25 18:09:16.422 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 7 se ha movido a 10,5
+2024-05-25 18:09:16.422 - INFO  - org.example.paquete.JuegoController - Individuo con id: 7 ha comido
+2024-05-25 18:09:16.422 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 10,1
+2024-05-25 18:09:16.423 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 12,1
+2024-05-25 18:09:16.423 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 1,3
+2024-05-25 18:09:16.423 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 2,3
+2024-05-25 18:09:16.423 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 7,3
+2024-05-25 18:09:16.423 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 11,3
+2024-05-25 18:09:16.423 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 2,4
+2024-05-25 18:09:16.423 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 4,5
+2024-05-25 18:09:16.423 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 1,7
+2024-05-25 18:09:16.424 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 3,7
+2024-05-25 18:09:16.424 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 6,7
+2024-05-25 18:09:16.424 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 9,7
+2024-05-25 18:09:16.424 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 11,7
+2024-05-25 18:09:16.424 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 7,8
+2024-05-25 18:09:16.424 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 5,9
+2024-05-25 18:09:16.424 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 6,9
+2024-05-25 18:09:16.424 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 7,9
+2024-05-25 18:09:16.425 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 11,9
+2024-05-25 18:09:16.425 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 2,10
+2024-05-25 18:09:16.425 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 8,11
+2024-05-25 18:09:16.425 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 12,11
+2024-05-25 18:09:16.425 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 2,12
+2024-05-25 18:09:16.425 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 5,12
+2024-05-25 18:09:16.425 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 6,12
+2024-05-25 18:09:16.425 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 12,12
+2024-05-25 18:09:16.433 - INFO  - org.example.paquete.JuegoController - Se ha restado 10% en las probabilidades de cada individuo
+2024-05-25 18:09:21.392 - INFO  - org.example.paquete.JuegoController - Comenzamos el bucle de turno
+2024-05-25 18:09:21.392 - INFO  - org.example.paquete.JuegoController - Se actualiza el contador de vida de los individuos
+2024-05-25 18:09:21.393 - INFO  - org.example.paquete.JuegoController - Tiempo de vida del resto de los recursos actualizado
+2024-05-25 18:09:21.394 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 1 se ha movido a 11,6
+2024-05-25 18:09:21.394 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 2 se ha movido a 2,3
+2024-05-25 18:09:21.394 - INFO  - org.example.paquete.JuegoController - Individuo normal de id 3 se ha movido a 5,3
+2024-05-25 18:09:21.395 - INFO  - org.example.paquete.JuegoController - Individuo normal de id 4 se ha movido a 5,4
+2024-05-25 18:09:21.395 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 5 se ha movido a 3,2
+2024-05-25 18:09:21.395 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 6 se ha movido a 5,2
+2024-05-25 18:09:21.396 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 7 se ha movido a 9,6
+2024-05-25 18:09:21.397 - INFO  - org.example.paquete.JuegoController - Individuo con id: 2 ha encontrado un tesoro
+2024-05-25 18:09:21.398 - INFO  - org.example.paquete.JuegoController - Individuo con id: 5 ha bebido agua
+2024-05-25 18:09:21.400 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 2,1
+2024-05-25 18:09:21.400 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 9,1
+2024-05-25 18:09:21.401 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 10,1
+2024-05-25 18:09:21.401 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 3,2
+2024-05-25 18:09:21.401 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 6,2
+2024-05-25 18:09:21.402 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 11,2
+2024-05-25 18:09:21.402 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 2,3
+2024-05-25 18:09:21.402 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 4,3
+2024-05-25 18:09:21.402 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 6,3
+2024-05-25 18:09:21.402 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 8,3
+2024-05-25 18:09:21.403 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 11,3
+2024-05-25 18:09:21.403 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 12,3
+2024-05-25 18:09:21.403 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 2,4
+2024-05-25 18:09:21.403 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 12,4
+2024-05-25 18:09:21.403 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 5,5
+2024-05-25 18:09:21.405 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 11,5
+2024-05-25 18:09:21.405 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 3,6
+2024-05-25 18:09:21.405 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 6,6
+2024-05-25 18:09:21.405 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 1,7
+2024-05-25 18:09:21.405 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 3,7
+2024-05-25 18:09:21.405 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 9,7
+2024-05-25 18:09:21.405 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 10,7
+2024-05-25 18:09:21.406 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 1,8
+2024-05-25 18:09:21.406 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 3,8
+2024-05-25 18:09:21.406 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 9,8
+2024-05-25 18:09:21.406 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 1,9
+2024-05-25 18:09:21.406 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 2,9
+2024-05-25 18:09:21.407 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 7,9
+2024-05-25 18:09:21.407 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 9,9
+2024-05-25 18:09:21.407 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 8,10
+2024-05-25 18:09:21.407 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 5,11
+2024-05-25 18:09:21.407 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 9,11
+2024-05-25 18:09:21.407 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 11,11
+2024-05-25 18:09:21.408 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 12,11
+2024-05-25 18:09:21.408 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 8,12
+2024-05-25 18:09:21.408 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 12,12
+2024-05-25 18:09:21.419 - INFO  - org.example.paquete.JuegoController - Se ha restado 10% en las probabilidades de cada individuo
+2024-05-25 18:09:23.003 - INFO  - org.example.paquete.JuegoController - Comenzamos el bucle de turno
+2024-05-25 18:09:23.003 - INFO  - org.example.paquete.JuegoController - Se actualiza el contador de vida de los individuos
+2024-05-25 18:09:23.003 - INFO  - org.example.paquete.JuegoController - Tiempo de vida del resto de los recursos actualizado
+2024-05-25 18:09:23.004 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 1 se ha movido a 12,5
+2024-05-25 18:09:23.004 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 2 se ha movido a 1,4
+2024-05-25 18:09:23.004 - INFO  - org.example.paquete.JuegoController - Individuo normal de id 3 se ha movido a 6,4
+2024-05-25 18:09:23.004 - INFO  - org.example.paquete.JuegoController - Individuo normal de id 4 se ha movido a 6,3
+2024-05-25 18:09:23.005 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 5ha cambiado su recurso objetivo, se dirige a: 2,1
+2024-05-25 18:09:23.005 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 5 se ha movido a 2,1
+2024-05-25 18:09:23.006 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 6ha cambiado su recurso objetivo, se dirige a: 2,1
+2024-05-25 18:09:23.006 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 6 se ha movido a 4,1
+2024-05-25 18:09:23.007 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 7 se ha movido a 8,7
+2024-05-25 18:09:23.007 - INFO  - org.example.paquete.JuegoController - Individuo con id: 3 ha encontrado un tesoro
+2024-05-25 18:09:23.007 - INFO  - org.example.paquete.JuegoController - Individuo con id: 4 ha sufrido al atravesar la montaña
+2024-05-25 18:09:23.007 - INFO  - org.example.paquete.JuegoController - Individuo con id: 5 ha bebido agua
+2024-05-25 18:09:23.007 - INFO  - org.example.paquete.JuegoController - Individuo con id: 7 ha comido
+2024-05-25 18:09:23.008 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 11,1
+2024-05-25 18:09:23.008 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 1,2
+2024-05-25 18:09:23.008 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 2,2
+2024-05-25 18:09:23.008 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 8,2
+2024-05-25 18:09:23.008 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 1,3
+2024-05-25 18:09:23.008 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 4,3
+2024-05-25 18:09:23.008 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 6,3
+2024-05-25 18:09:23.008 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 8,3
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 4,5
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 6,5
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 10,5
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 11,5
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 12,5
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 5,6
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 12,8
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 8,9
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 7,10
+2024-05-25 18:09:23.009 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 2,11
+2024-05-25 18:09:23.010 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 5,11
+2024-05-25 18:09:23.010 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 11,11
+2024-05-25 18:09:23.010 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 12,11
+2024-05-25 18:09:23.010 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 1,12
+2024-05-25 18:09:23.010 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 4,12
+2024-05-25 18:09:23.017 - INFO  - org.example.paquete.JuegoController - Se ha restado 10% en las probabilidades de cada individuo
+2024-05-25 18:09:31.385 - INFO  - org.example.paquete.JuegoController - Comenzamos el bucle de turno
+2024-05-25 18:09:31.385 - INFO  - org.example.paquete.JuegoController - Se actualiza el contador de vida de los individuos
+2024-05-25 18:09:31.385 - INFO  - org.example.paquete.JuegoController - Agua borrada por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Agua borrada por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Comida borrada por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Comida borrada por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Tesoro borrado por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Tesoro borrado por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Agua borrada por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Montaña borrada por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Tesoro borrado por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Agua borrada por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Comida borrada por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Tesoro borrado por turnos de vida terminados
+2024-05-25 18:09:31.386 - INFO  - org.example.paquete.JuegoController - Comida borrada por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Comida borrada por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Comida borrada por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Pozo borrado por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Tesoro borrado por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Comida borrada por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Tesoro borrado por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Montaña borrada por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Pozo borrado por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Biblioteca borrada por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Montaña borrada por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Agua borrada por turnos de vida terminados
+2024-05-25 18:09:31.387 - INFO  - org.example.paquete.JuegoController - Comida borrada por turnos de vida terminados
+2024-05-25 18:09:31.388 - INFO  - org.example.paquete.JuegoController - Montaña borrada por turnos de vida terminados
+2024-05-25 18:09:31.388 - INFO  - org.example.paquete.JuegoController - Tiempo de vida del resto de los recursos actualizado
+2024-05-25 18:09:31.388 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 1 se ha movido a 11,4
+2024-05-25 18:09:31.388 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 2 se ha movido a 2,3
+2024-05-25 18:09:31.388 - INFO  - org.example.paquete.JuegoController - Individuo normal de id 3 se ha movido a 7,5
+2024-05-25 18:09:31.389 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 5ha cambiado su recurso objetivo, se dirige a: 1,2
+2024-05-25 18:09:31.389 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 5 se ha movido a 1,2
+2024-05-25 18:09:31.389 - INFO  - org.example.paquete.JuegoController - Individuo avanzado de id 6 se ha movido a 3,1
+2024-05-25 18:09:31.389 - INFO  - org.example.paquete.JuegoController - Individuo básico de id 7 se ha movido a 7,6
+2024-05-25 18:09:31.389 - INFO  - org.example.paquete.JuegoController - Individuo con id: 2 ha entrado en la biblioteca
+2024-05-25 18:09:31.389 - INFO  - org.example.paquete.JuegoController - Individuo con id: 2 ha encontrado un tesoro
+2024-05-25 18:09:31.389 - INFO  - org.example.paquete.JuegoController - Individuo con id: 5 ha caido en un pozo y ha muerto trágicamente
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 2,1
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 4,1
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 5,1
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 6,1
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 8,1
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 2,2
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 3,2
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 5,2
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 6,2
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 9,2
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 11,2
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 5,3
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 7,3
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 8,3
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 3,5
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 7,5
+2024-05-25 18:09:31.390 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 9,5
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 3,6
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 6,6
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 7,6
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 11,6
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 4,7
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 6,7
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 12,7
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 2,8
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 12,8
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 1,9
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva biblioteca en 8,10
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva agua en 11,10
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 12,10
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva montaña en 4,11
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nuevo tesoro en 8,11
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nueva comida en 6,12
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 10,12
+2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 12,12
+2024-05-25 18:09:31.394 - INFO  - org.example.paquete.JuegoController - Se ha restado 10% en las probabilidades de cada individuo
+2024-05-25 18:50:59.415 - INFO  - org.example.paquete.MenuController - Cargando el menú
