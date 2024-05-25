@@ -1,5 +1,6 @@
 package org.example.paquete;
 
+import org.example.paquete.Grafo.Operación;
 import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.*;
 import javafx.fxml.FXML;
@@ -391,26 +392,36 @@ public class JuegoController implements GsonUtilEjemplo {
                 if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("A")){
                     ind.setVida(ind.getVida() + modelo.getTurnosAgua());
                     System.out.println("Bebe");
+                    ind.getCola().push("bebe");
                 }
                 if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("C")){
                     ind.setVida(ind.getVida() + modelo.getTurnosComida());
                     System.out.println("come");
+                    ind.getCola().push("come");
                 }
                 if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("B")){
                     ind.setProbClon(ind.getProbClon() + modelo.getAumentoBiblio());
                     System.out.println("Encuentra bilbio");
+                    String op = ind.getOperacion().getBeber();
+                    ind.getCola().push(op);
                 }
                 if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("T")){
                     ind.setProbRepro(ind.getProbRepro() + modelo.getAumentoTesoro());
                     System.out.println("Encuentra tesoro");
+                    String op = ind.getOperacion().getTesoro();
+                    ind.getCola().push(op);
                 }
                 if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("P")){
                     ind.setVida(0);
                     System.out.println("Cae en pozo");
+                    String op = ind.getOperacion().getPozo();
+                    ind.getCola().push(op);
                 }
                 if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("M")){
                     ind.setVida(ind.getVida() - modelo.getTurnosMontania());
                     System.out.println("choque montaña");
+                    String op = ind.getOperacion().getMontania();
+                    ind.getCola().push(op);
                 }
             }
             ///5. ¿Reproducciones?

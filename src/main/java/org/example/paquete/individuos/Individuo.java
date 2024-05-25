@@ -1,5 +1,9 @@
 package org.example.paquete.individuos;
 
+import org.example.paquete.Grafo.Grafo;
+import org.example.paquete.Grafo.Operación;
+import org.example.paquete.ListaEnlazada.Cola;
+
 import java.util.Random;
 
 public class Individuo {
@@ -11,6 +15,8 @@ public class Individuo {
     private int probMuerte = 100 - this.probRepro;
     private int posX;
     private int posY;
+    private Cola cola;
+    private Operación operacion;
 
     public String getTipo() {
         return tipo;
@@ -49,6 +55,22 @@ public class Individuo {
         this.posX = posX;
         this.posY = posY;
         this.tipo = tipo;
+    }
+
+    public Operación getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(Operación operacion) {
+        this.operacion = operacion;
+    }
+
+    public Cola getCola() {
+        return cola;
+    }
+
+    public void setCola(Cola cola) {
+        this.cola = cola;
     }
 
     public int getId() {
@@ -150,6 +172,9 @@ public class Individuo {
             probClon = 100;
         return probClon;
     }
+    public void push (String i){
+        cola.push(i);
+    }
 
     public int restaProbClon(int percent) {
         probClon = probClon - percent;
@@ -209,6 +234,9 @@ public class Individuo {
         Random rand = new Random();
         int n = rand.nextInt(101);
         return this.probClon >= n;
+    }
+    public Grafo getGrafo(){
+
     }
 }
 
