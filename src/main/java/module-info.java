@@ -6,6 +6,8 @@ module org.example.proyectomigrado {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires com.google.gson;
+    requires org.apache.logging.log4j;
+
 
     opens org.example.paquete to javafx.fxml,com.google.gson;
     exports org.example.paquete;
