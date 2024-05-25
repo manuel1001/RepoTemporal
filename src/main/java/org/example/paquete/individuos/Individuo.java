@@ -1,6 +1,7 @@
 package org.example.paquete.individuos;
 
 import org.example.paquete.Grafo.Grafo;
+import org.example.paquete.Grafo.Operacion;
 import org.example.paquete.Grafo.Operación;
 import org.example.paquete.ListaEnlazada.Cola;
 
@@ -16,7 +17,7 @@ public class Individuo {
     private int posX;
     private int posY;
     private Cola cola;
-    private Operación operacion;
+    private Operacion operacion;
 
     public String getTipo() {
         return tipo;
@@ -235,9 +236,7 @@ public class Individuo {
         int n = rand.nextInt(101);
         return this.probClon >= n;
     }
-    public Grafo getGrafo(){
 
-    }
 }
 
 

@@ -4,79 +4,41 @@ import org.example.paquete.individuos.Individuo;
 import org.example.paquete.recursos.Recurso;
 
 public class Operacion {
-    private String beber = "beber";
-    private String comer = "comer";
-    private String biblio = "biblioteca";
-    private String tesoro = "tesoro";
-    private String pozo = "pozo";
-    private String Montania = "montaña";
-    private String Clonacion = "clonación";
-    private Individuo Hijo;
-
-
-
+    private Recurso r;
+    private Individuo i;
+    private String Tipo;
     //constructores
 
-    public Operacion (Recurso recurso){
-
+    public Operacion (Recurso r){
+        this.r = r;
+        Tipo = "recurso";
     }
 
-
-    //getters y setters
-
-    public String getClonacion() {
-        return Clonacion;
+    public Operacion ( Individuo i){
+        this.i = i;
+        Tipo = "individuo";
     }
 
-    public void setClonación(String clonacion) {
-        Clonacion = clonacion;
+    public Recurso getR() {
+        return r;
+    }
+    public void setR(Recurso r) {
+        this.r = r;
     }
 
-    public String getBeber() {
-        return beber;
+    public Individuo getI() {
+        return i;
     }
 
-    public void setBeber(String beber) {
-        this.beber = beber;
+    public void setI(Individuo i) {
+        this.i = i;
     }
 
-    public String getComer() {
-        return comer;
+    public String getTipo() {
+        return Tipo;
     }
 
-    public void setComer(String comer) {
-        this.comer = comer;
-    }
-
-    public String getBiblio() {
-        return biblio;
-    }
-
-    public void setBiblio(String biblio) {
-        this.biblio = biblio;
-    }
-
-    public String getTesoro() {
-        return tesoro;
-    }
-
-    public void setTesoro(String tesoro) {
-        this.tesoro = tesoro;
-    }
-
-    public String getPozo() {
-        return pozo;
-    }
-
-    public void setPozo(String pozo) {
-        this.pozo = pozo;
-    }
-
-    public String getMontania() {
-        return Montania;
-    }
-
-    public void setMontania(String montania) {
-        Montania = montania;
+    public void setTipo(String tipo) {
+        Tipo = tipo;
     }
 }

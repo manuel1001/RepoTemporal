@@ -4,6 +4,7 @@ import javafx.scene.shape.Arc;
 import org.example.paquete.ListaEnlazada.Cola;
 import org.example.paquete.ListaEnlazada.ElementoLE;
 import org.example.paquete.ListaEnlazada.ListaEnlazada;
+import org.example.paquete.ListaEnlazada.ListaInd;
 import org.example.paquete.individuos.Individuo;
 import org.example.paquete.recursos.*;
 
@@ -69,38 +70,58 @@ public class Grafo {
             System.out.println("error: arco no pertenece a grafo");
         }
     }
-    public Grafo(Individuo i){
-        Cola cola = i.getCola();
-        Nodo nodoPrincipal = new Nodo(i);
-        for (int z = 0; z < cola.getCola().getNumeroElementos(); z++){
-            Object x = cola.getCola().getElemento(z).getData();
-            if (x == "bebe"){
-                Agua agua = new Agua();
-                Nodo nodo = new Nodo(agua);
-                Arco arco = new Arco<>(nodo, nodoPrincipal);
-            } else if (x == "comer") {
-                Comida comida = new Comida();
-                Nodo nodo = new Nodo<>(comida);
-                Arco arco = new Arco<>(nodo, nodoPrincipal);
-            } else if (x == "biblioteca") {
-                Biblioteca biblioteca = new Biblioteca();
-                Nodo nodo = new Nodo(biblioteca);
-                Arco arco = new Arco(nodo, nodoPrincipal);
-            } else if (x == "tesoro") {
-                Tesoro tesoro = new Tesoro();
-                Nodo nodo = new Nodo (tesoro);
-                Arco arco = new Arco(nodo, nodoPrincipal);
-            } else if (x == "pozo") {
-                Pozo pozo = new Pozo();
-                Nodo nodo = new Nodo(pozo);
-                Arco arco = new Arco(nodo, nodoPrincipal);
-            } else if (x== "montaña") {
-                Montania montania = new Montania();
-                Nodo nodo = new Nodo(montania);
-                Arco arco = new Arco(nodo, nodoPrincipal);
-            } else if (x == "clonación") {
-                Arco arco = new Arco(nodoPrincipal, nodoPrincipal);
+    public Grafo(ListaInd listahistorica){
+
+        Agua agua = new Agua();
+        Comida comida = new Comida();
+        Biblioteca biblioteca = new Biblioteca();
+        Tesoro tesoro = new Tesoro();
+        Pozo pozo = new Pozo();
+        Montania montania = new Montania();
+
+        Nodo nodoAgua = new Nodo(agua);
+        Nodo nodoComida = new Nodo(comida);
+        Nodo nodoBiblioteca = new Nodo(biblioteca);
+        Nodo nodoTesoro = new Nodo(tesoro);
+        Nodo nodoPozo = new Nodo(pozo);
+        Nodo nodoMontania = new Nodo(montania);
+
+        for (int z = 0; z < listahistorica.getNumeroElementos(); z++){
+            Individuo i = listahistorica.getElemento(z).getData();
+            Nodo nodoIndividuo = new Nodo<>(i);
+
+            for (int p =0 ; p < i.getCola().getCola().getNumeroElementos()){
+                if (x == "bebe"){
+                    Nodo nodo = new Nodo(agua);
+                    Arco arco = new Arco<>(nodo, nodoPrincipal);
+                } else if (x == "comer") {
+
+                    Nodo nodo = new Nodo<>(comida);
+                    Arco arco = new Arco<>(nodo, nodoPrincipal);
+                } else if (x == "biblioteca") {
+
+                    Nodo nodo = new Nodo(biblioteca);
+                    Arco arco = new Arco(nodo, nodoPrincipal);
+                } else if (x == "tesoro") {
+
+                    Nodo nodo = new Nodo (tesoro);
+                    Arco arco = new Arco(nodo, nodoPrincipal);
+                } else if (x == "pozo") {
+
+                    Nodo nodo = new Nodo(pozo);
+                    Arco arco = new Arco(nodo, nodoPrincipal);
+                } else if (x== "montaña") {
+
+                    Nodo nodo = new Nodo(montania);
+                    Arco arco = new Arco(nodo, nodoPrincipal);
+                } else if (x == "clonación") {
+                    Nodo nodo = new Nodo (i);
+                    Arco arco = new Arco(nodo, nodoPrincipal);
+                }
             }
+
+
+
         }
 
     }

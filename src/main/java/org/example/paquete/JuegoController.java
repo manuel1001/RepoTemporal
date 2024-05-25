@@ -392,7 +392,8 @@ public class JuegoController implements GsonUtilEjemplo {
                 if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("A")){
                     ind.setVida(ind.getVida() + modelo.getTurnosAgua());
                     System.out.println("Bebe");
-                    ind.getCola().push("bebe");
+                    String op = ind.getOperacion().getBeber();
+                    ind.getCola().push(op);
                 }
                 if(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("C")){
                     ind.setVida(ind.getVida() + modelo.getTurnosComida());
@@ -425,6 +426,7 @@ public class JuegoController implements GsonUtilEjemplo {
                 }
             }
             ///5. ¿Reproducciones?
+
             //
             ///6. ¿Clonaciones?
             for (int i = 0; i < x4; i++) {
@@ -435,9 +437,12 @@ public class JuegoController implements GsonUtilEjemplo {
 
                     Individuo ind2 = new Individuo(contadorId, ind.getGeneration() + 1, ind.getVida(), ind.getProbRepro(), ind.getProbClon(), ind.getProbMuerte(), posx2, posy2, ind.getTipo());
                     contadorId++;
+                    String op = ind.getOperacion().getClonacion();
+                    ind.getCola().push(op);
                     modelo.getListaInicialIndividuos().add(new ElementoInd(ind2));
                     listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind2);
                     listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
+
                 }
             }
             ///7. Máximo tres en cada casilla

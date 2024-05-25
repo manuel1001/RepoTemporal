@@ -4,7 +4,7 @@ public class Recurso {
     private int vida;
     private int posX;
     private int posY;
-
+    private int duracion;
     public int getVida() {
         return vida;
     }
@@ -21,7 +21,7 @@ public class Recurso {
         this.duracion = duracion;
     }
 
-    private int duracion;
+
 
 
     public Recurso(int vida, int posX, int posY) {

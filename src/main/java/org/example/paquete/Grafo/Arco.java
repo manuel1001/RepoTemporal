@@ -10,7 +10,7 @@ public class Arco <T> {
         this.origen = origen;
         this.coste = coste;
     }
-    public Arco(Nodo<T> destino, Nodo<T> origen){
+    public Arco(Nodo<T> destino, Vertice<T> origen){
         this.destino = destino;
         this.origen = origen;
         this.coste = coste;
