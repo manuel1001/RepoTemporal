@@ -2,6 +2,7 @@ package org.example.paquete.individuos;
 
 import org.example.paquete.ArbolBinario.ArbolBinario;
 import org.example.paquete.ArbolBinario.ElementoA;
+import org.example.paquete.Grafo.Cola;
 import org.example.paquete.recursos.Recurso;
 
 import java.util.Random;
@@ -14,6 +15,7 @@ public class Individuo {
     private int probClon;
     private int probMuerte = 100 - this.probRepro;
     private int posX;
+    private Cola colaAccion;
     private ArbolBinario arbolGene;
 
     private int posY;
@@ -46,7 +48,7 @@ public class Individuo {
         vida = 3;
         probRepro = 50;
         probClon = 50;
-
+        this.colaAccion = new Cola();
     }
 
     public Individuo(int probRepro, int vida, int probClon, int id) {
@@ -54,6 +56,7 @@ public class Individuo {
         this.probRepro = probRepro;
         this.probClon = probClon;
         this.id = id;
+        this.colaAccion = new Cola();
     }
 
     public Individuo(int id, int generation, int vida, int probRepro, int probClon, int probMuerte, int posX, int posY, String tipo) {
@@ -67,6 +70,7 @@ public class Individuo {
         this.posY = posY;
         this.tipo = tipo;
         this.setArbolGene(new ArbolBinario(new ElementoA(this.getId())));
+        this.colaAccion = new Cola();
     }
 
     public int getId() {
@@ -76,11 +80,6 @@ public class Individuo {
     public void setId(int id) {
         this.id = id;
     }
-
-    public int getGeneration() {
-        return generation;
-    }
-
     public void setGeneration(int generation) {
         this.generation = generation;
     }
@@ -114,6 +113,14 @@ public class Individuo {
         return probMuerte;
     }
 
+    public Cola getColaAccion() {
+        return colaAccion;
+    }
+
+    public void setColaAccion(Cola colaAccion) {
+        this.colaAccion = colaAccion;
+    }
+
     public int getPosX() {
         return posX;
     }
@@ -135,40 +142,12 @@ public class Individuo {
         this.probMuerte = probMuerte;
         probRepro = 100 - this.probMuerte;
     }
-
-    public int sumaVida(int turnos) {
-        vida = vida + turnos;
-        return vida;
-    }
-
-    public int restaVida(int turnos) {
-        vida = vida - turnos;
-        if (vida < 0)
-            vida = 0;
-        return vida;
-    }
-
-    public int sumaProbRepro(int percent) {
-        probRepro = probRepro + percent;
-        if (probRepro > 100)
-            probRepro = 100;
-        return probRepro;
-    }
-
     public int restaProbRepro(int percent) {
         probRepro = probRepro - percent;
         if (probRepro < 0)
             probRepro = 0;
         return probRepro;
     }
-
-    public int sumaProbClon(int percent) {
-        probClon = probClon + percent;
-        if (probClon > 100)
-            probClon = 100;
-        return probClon;
-    }
-
     public int restaProbClon(int percent) {
         probClon = probClon - percent;
         if (probClon < 0)

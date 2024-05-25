@@ -7,22 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArbolBinarioTest {
 
     @Test
-    void getRaiz() {
-    }
-
-    @Test
-    void setRaiz() {
-    }
-
-    @Test
-    void enlazarDerecha() {
-    }
-
-    @Test
-    void enlazarIzquierda() {
-    }
-
-    @Test
     void imprimirArbol() {
         ArbolBinario arbol = new ArbolBinario();
         ElementoA elementoA = new ElementoA(1);

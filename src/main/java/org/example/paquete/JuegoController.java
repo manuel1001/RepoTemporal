@@ -5,6 +5,8 @@ import javafx.scene.input.MouseEvent;
 import org.apache.logging.log4j.Logger;
 import org.example.paquete.ArbolBinario.ArbolBinario;
 import org.example.paquete.ArbolBinario.ElementoA;
+import org.example.paquete.Grafo.Arco;
+import org.example.paquete.Grafo.Grafo;
 import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.*;
 import javafx.fxml.FXML;
@@ -26,6 +28,7 @@ public class JuegoController implements GsonUtilEjemplo {
     @FXML
     private GridPane tablero;
     private String nombreJuego;
+    private ListaInd listaHistoricaInd = new ListaInd();
     private Partida modelo;
     private PartidaProperties propiedadesModelo;
     private ListaLabel listaLabels;
@@ -186,6 +189,7 @@ public class JuegoController implements GsonUtilEjemplo {
                     int posx = ind.getPosX();
                     int posy = ind.getPosY();
                     listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().addIndividuo(ind);
+                    listaHistoricaInd.add(new ElementoInd(ind));
                     listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText("I");
                 }
                 log.info("Individuos añadidos al Gridpane");
@@ -500,26 +504,32 @@ public class JuegoController implements GsonUtilEjemplo {
                 int posy = ind.getPosY();
                 if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("A")) {
                     ind.setVida(ind.getVida() + modelo.getTurnosAgua());
+//                    ind.getColaAccion().push("bebe");
                     log.info("Individuo con id: " + ind.getId() + " ha bebido agua");
                 }
                 if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("C")) {
                     ind.setVida(ind.getVida() + modelo.getTurnosComida());
+//                    ind.getColaAccion().push("come");
                     log.info("Individuo con id: " + ind.getId() + " ha comido");
                 }
                 if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("B")) {
                     ind.setProbClon(ind.getProbClon() + modelo.getAumentoBiblio());
+//                    ind.getColaAccion().push("lee");
                     log.info("Individuo con id: " + ind.getId() + " ha entrado en la biblioteca");
                 }
                 if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("T")) {
                     ind.setProbRepro(ind.getProbRepro() + modelo.getAumentoTesoro());
+//                    ind.getColaAccion().push("tesoro");
                     log.info("Individuo con id: " + ind.getId() + " ha encontrado un tesoro");
                 }
                 if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("P")) {
                     ind.muerte();
+//                    ind.getColaAccion().push("pozo");
                     log.info("Individuo con id: " + ind.getId() + " ha caido en un pozo y ha muerto trágicamente");
                 }
                 if (listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().contains("M")) {
                     ind.setVida(ind.getVida() - modelo.getTurnosMontania());
+//                    ind.getColaAccion().push("bebe");
                     log.info("Individuo con id: " + ind.getId() + " ha sufrido al atravesar la montaña");
                 }
             }
@@ -539,17 +549,26 @@ public class JuegoController implements GsonUtilEjemplo {
                                     IndivBasico hijo = new IndivBasico((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
                                     hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción homotípica básica en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Normal")) {
                                     IndivNormal hijo = new IndivNormal((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
                                     hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción homotípica normal en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Avanzado")) {
                                     IndivAvanzado hijo = new IndivAvanzado((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
                                     hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción homotípica avanzada en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 }
                                 contadorId++;
                             }
@@ -561,17 +580,26 @@ public class JuegoController implements GsonUtilEjemplo {
                                     IndivAvanzado hijo = new IndivAvanzado((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
                                     hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción heterotípica en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo avanzado " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Normal") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Normal")) {
                                     IndivNormal hijo = new IndivNormal((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
                                     hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción heterotípica en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo normal " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Básico") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Básico")) {
                                     IndivBasico hijo = new IndivBasico((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
                                     hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción heterotípica en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo básico " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 }
                                 contadorId++;
                             } else {/// Sí la probabilidad de mejora no ha salido, recorremos en dirección inversa, de más básico a más avanzado
@@ -579,17 +607,26 @@ public class JuegoController implements GsonUtilEjemplo {
                                     IndivBasico hijo = new IndivBasico((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().enlazarDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData());
                                     hijo.getArbolGene().enlazarIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción heterotípica en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo básico " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Normal") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Normal")) {
                                     IndivNormal hijo = new IndivNormal((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().enlazarDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData());
                                     hijo.getArbolGene().enlazarIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción heterotípica en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo normal " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Avanzado") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Avanzado")) {
                                     IndivAvanzado hijo = new IndivAvanzado((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
                                     hijo.getArbolGene().enlazarDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData());
                                     hijo.getArbolGene().enlazarIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData());
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getColaAccion().push(contadorId);
+//                                    listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getColaAccion().push(contadorId);
                                     log.info("Reproducción heterotípica en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY()+ " ha nacido el individuo avanzado " + hijo.getId());
+                                    listaHistoricaInd.add(new ElementoInd(hijo));
                                 }
                                 contadorId++;
                             }
@@ -604,6 +641,8 @@ public class JuegoController implements GsonUtilEjemplo {
                     int posx2 = ind.getPosX();
                     int posy2 = ind.getPosY();
                     Individuo ind2 = new Individuo(contadorId, contadorTurno, ind.getVida(), ind.getProbRepro(), ind.getProbClon(), ind.getProbMuerte(), posx2, posy2, ind.getTipo());
+//                    ind.getColaAccion().push(contadorId);
+                    listaHistoricaInd.add(new ElementoInd(ind2));
                     ind2.setArbolGene(new ArbolBinario(new ElementoA(ind2.getId())));
                     ///Si viene de clonación, a la derecha tendra a su progenitos
                     ind2.getArbolGene().enlazarDerecha(ind);
@@ -712,6 +751,16 @@ public class JuegoController implements GsonUtilEjemplo {
             if (numInds == 0) {
                 labelTurnoLayout.setText("Turno:" + contadorTurno + ", partida finalizada sin supervivientes");
                 log.info("Partida terminada sin ningún individuo vivo");
+//                Grafo grafoFinal = new Grafo(listaHistoricaInd);
+//                for (int k = 0; k < listaHistoricaInd.getNumeroElementos(); k++){
+//                    while(!listaHistoricaInd.getElemento(k).getData().getColaAccion().getCola().isVacia()){
+//                        ElementoLE el = listaHistoricaInd.getElemento(k).getData().getColaAccion().pull();
+//                       if(el.getData() instanceof Integer){
+//                           Arco arco = new Arco(grafoFinal.getListVertices().getElemento(k+6), grafoFinal.getListVertices().getElemento(k+ (int) el.getData()));
+//                       }
+//                    }
+//                }
+
             }
             else if(numInds ==1){
                 String arbolGanador = modelo.getListaInicialIndividuos().getElemento(0).getData().getArbolGene().imprimirArbol();

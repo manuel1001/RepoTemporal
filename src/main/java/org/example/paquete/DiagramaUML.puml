@@ -1,0 +1,288 @@
+@startuml
+
+class Recurso {
+    -int vida
+    -int posX
+    -int posY
+    -String id
+    -int duracion
+
+    +Recurso(int vida, int posX, int posY)
+    +Recurso(int posX, int posY)
+    +int getVida()
+    +void setVida(int vida)
+    +int getDuracion()
+    +void setDuracion(int duracion)
+    +int getPosX()
+    +void setPosX(int posX)
+    +int getPosY()
+    +void setPosY(int posY)
+    +String getId()
+    +void setId(String id)
+    +String toString()
+}
+
+class Agua {
+    +Agua(int vida, int posX, int posY)
+    +String toString()
+}
+
+class Biblioteca {
+    -int aumentoBiblio
+
+    +Biblioteca(int aumentoBiblio, int posX, int posY)
+    +String toString()
+}
+
+class Comida {
+    +Comida(int vida, int posX, int posY)
+    +String toString()
+}
+
+class Montania {
+    +Montania(int vida, int posX, int posY)
+    +String toString()
+}
+
+class Pozo {
+    +Pozo(int vida, int posX, int posY)
+    +Pozo(int posX, int posY)
+    +String toString()
+}
+
+class Tesoro {
+    -int aumentoTesoro
+
+    +Tesoro(int aumentoTesoro, int posX, int posY)
+    +String toString()
+}
+
+class ElementoInd {
+    -ElementoInd siguiente
+    -Individuo data
+
+    +ElementoInd(Individuo data)
+    +void insertarmeEn(ElementoInd el)
+    +void setData(Individuo data)
+    +void setSiguiente(ElementoInd siguiente)
+    +Individuo getData()
+    -ElementoInd getSiguiente()
+    +String toString()
+}
+
+class ListaInd {
+    -ElementoInd primero
+
+    +ListaInd(ElementoInd primero)
+    +ListaInd()
+    +int getNumeroElementos()
+    +boolean isVacia()
+    +void vaciar()
+    +void add(ElementoInd el)
+    +void insert(ElementoInd el, int posicion)
+    +void del(int posicion)
+    +int getPosicion(ElementoInd el)
+    +int getPosicion(Individuo el)
+    +ElementoInd getPrimero()
+    +ElementoInd getUltimo()
+    +ElementoInd getSiguiente(ElementoInd el)
+    +ElementoInd getElemento(int posicion)
+    +void imprimir()
+}
+
+class Individuo {
+    -int id
+    -int generation
+    -int vida
+    -int probRepro
+    -int probClon
+    -int probMuerte
+    -int posX
+    -int posY
+    -ArbolBinario arbolGene
+    -Recurso recursoObj
+    -String tipo
+
+    +Individuo()
+    +Individuo(int probRepro, int vida, int probClon, int id)
+    +Individuo(int id, int generation, int vida, int probRepro, int probClon, int probMuerte, int posX, int posY, String tipo)
+    +int getId()
+    +void setId(int id)
+    +void setGeneration(int generation)
+    +int getVida()
+    +void setVida(int vida)
+    +int getProbRepro()
+    +void setProbRepro(int probRepro)
+    +int getProbClon()
+    +void setProbClon(int probClon)
+    +int getProbMuerte()
+    +int getPosX()
+    +void setPosX(int posX)
+    +int getPosY()
+    +void setPosY(int posY)
+    +void setProbMuerte(int probMuerte)
+    +int restaProbRepro(int percent)
+    +int restaProbClon(int percent)
+    +void muerte()
+    +void movimiento(int x, int y)
+    +String toString()
+    +void movimientoBasic(int columnas, int filas)
+    +Boolean meClono()
+    +ArbolBinario getArbolGene()
+    +void setArbolGene(ArbolBinario arbolGene)
+}
+
+class IndivBasico {
+    +IndivBasico(int probRepro, int vida, int probClon, int id, int posX, int posY)
+}
+
+class IndivAvanzado {
+    +IndivAvanzado(int probRepro, int vida, int probClon, int id, int posX, int posY)
+}
+
+class IndivNormal {
+    +IndivNormal(int probRepro, int vida, int probClon, int id, int posX, int posY)
+}
+
+class ElementoA {
+    -int data
+    -ElementoA derecha
+    -ElementoA izquierda
+
+    +ElementoA(int data, ElementoA derecha, ElementoA izquierda)
+    +void setDerecha(ElementoA derecha)
+    +void setIzquierda(ElementoA izquierda)
+    +ElementoA(int data)
+    +int getData()
+    +void setData(int data)
+    +ElementoA getDerecha()
+    +ElementoA getIzquierda()
+}
+
+class ArbolBinario {
+    -ElementoA raiz
+
+    +ArbolBinario()
+    +ArbolBinario(ElementoA nodo)
+    +ElementoA getRaiz()
+    +void setRaiz(ElementoA raiz)
+    +void enlazarDerecha(Individuo ind)
+    +void enlazarIzquierda(Individuo ind)
+    +String imprimirArbol()
+    -String imprimirArbol(ElementoA nodo, int nivel)
+}
+
+class Casilla {
+    -ListaInd listaIndividuos
+    -ListaRecursos listaRecursos
+    -int posX
+    -int posY
+
+    +Casilla(int posX, int posY)
+    +ListaInd getListaIndividuos()
+    +void setListaIndividuos(ListaInd listaIndividuos)
+    +ListaRecursos getListaRecursos()
+    +void setListaRecursos(ListaRecursos listaRecursos)
+}
+class ElementoRec {
+    -ElementoRec siguiente
+    -Recurso data
+
+    +ElementoRec(Recurso data)
+    +void insertarmeEn(ElementoRec el)
+    +void setData(Recurso data)
+    +void setSiguiente(ElementoRec siguiente)
+    +Recurso getData()
+    -ElementoRec getSiguiente()
+    +String toString()
+}
+class ListaRecursos {
+    -ElementoRec primero
+
+    +ListaRecursos(primero: ElementoRec)
+    +ListaRecursos()
+    +getNumeroElementos(): int
+    +isVacia(): boolean
+    +vaciar(): void
+    +add(el: ElementoRec): void
+    +insert(el: ElementoRec, posicion: int): void
+    +del(posicion: int): void
+    +getPosicion(el: ElementoRec): int
+    +getPrimero(): ElementoRec
+    +getUltimo(): ElementoRec
+    +getSiguiente(el: ElementoRec): ElementoRec
+    +getElemento(posicion: int): ElementoRec
+    +imprimir(): void
+}
+class Partida {
+    -archivoNombre: String
+    -aparicionAgua: int
+    -turnosAgua: int
+    -aparicionComida: int
+    -turnosComida: int
+    -aparicionMontania: int
+    -turnosMontania: int
+    -aparicionBiblio: int
+    -aumentoBiblio: int
+    -aparicionTesoro: int
+    -aumentoTesoro: int
+    -aparicionPozo: int
+    -aparicionRecurso: int
+    -numeroColumnas: int
+    -numeroFilas: int
+    -todosRecuros: ListaRecursos
+    -listaInicialIndividuos: ListaInd
+
+    +Partida()
+    +Partida(archivoNombre: String, aparicionAgua: int, turnosAgua: int, aparicionComida: int, turnosComida: int, aparicionMontania: int, turnosMontania: int, aparicionBiblio: int, aumentoBiblio: int, aparicionTesoro: int, aumentoTesoro: int, aparicionPozo: int, listaInicialIndividuos: ListaInd, numeroColumnas: int, numeroFilas: int, aparicionRecurso: int)
+    +Partida(archivoNombre: String, aparicionAgua: int, turnosAgua: int, aparicionComida: int, turnosComida: int, aparicionMontania: int, turnosMontania: int, aparicionBiblio: int, aumentoBiblio: int, aparicionTesoro: int, aumentoTesoro: int, aparicionPozo: int, numeroColumnas: int, numeroFilas: int)
+    +getArchivoNombre(): String
+    +getAparicionAgua(): int
+    +getTurnosAgua(): int
+    +getAparicionComida(): int
+    +getTurnosComida(): int
+    +getAparicionMontania(): int
+    +getTurnosMontania(): int
+    +getAparicionBiblio(): int
+    +getAumentoBiblio(): int
+    +getAparicionTesoro(): int
+    +getAumentoTesoro(): int
+    +getAparicionPozo(): int
+    +getNumeroColumnas(): int
+    +getNumeroFilas(): int
+    +setArchivoNombre(archivoNombre: String): void
+    +setAparicionAgua(aparicionAgua: int): void
+    +setTurnosAgua(turnosAgua: int): void
+    +setAparicionComida(aparicionComida: int): void
+    +setTurnosComida(turnosComida: int): void
+    +setAparicionMontania(aparicionMontania: int): void
+    +setTurnosMontania(turnosMontania: int): void
+    +setAparicionBiblio(aparicionBiblio: int): void
+    +setAumentoBiblio(aumentoBiblio: int): void
+    +setAparicionTesoro(aparicionTesoro: int): void
+    +setAumentoTesoro(aumentoTesoro: int): void
+    +setAparicionPozo(aparicionPozo: int): void
+    +getAparicionRecurso(): int
+    +getListaInicialIndividuos(): ListaInd
+    +getTodosRecuros(): ListaRecursos
+    +setTodosRecuros(todosRecuros: ListaRecursos): void
+    +toString(): String
+}
+Recurso <|-- Agua
+Recurso <|-- Biblioteca
+Recurso <|-- Comida
+Recurso <|-- Montania
+Recurso <|-- Pozo
+Recurso <|-- Tesoro
+ElementoInd --|> ListaInd
+Individuo <|-- IndivBasico
+Individuo <|-- IndivAvanzado
+Individuo <|-- IndivNormal
+ArbolBinario o-- ElementoA
+ElementoRec--o ListaRecursos
+Recurso--o ElementoRec
+ElementoInd o-- Individuo
+ListaInd--o Casilla
+ListaRecursos--o Casilla
+
+@enduml

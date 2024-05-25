@@ -2,6 +2,7 @@ package org.example.paquete.individuos;
 
 import org.example.paquete.ArbolBinario.ArbolBinario;
 import org.example.paquete.ArbolBinario.ElementoA;
+import org.example.paquete.Grafo.Cola;
 
 public class IndivNormal extends Individuo{
     public IndivNormal(int probRepro, int vida, int probClon, int id,  int posX, int posY ){
@@ -14,5 +15,6 @@ public class IndivNormal extends Individuo{
         this.setPosY(posY);
         this.setTipo("Normal");
         this.setArbolGene(new ArbolBinario(new ElementoA(this.getId())));
+        this.setColaAccion(new Cola());
     }
 }
