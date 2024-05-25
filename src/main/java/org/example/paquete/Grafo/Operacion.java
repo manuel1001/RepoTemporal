@@ -1,15 +1,37 @@
 package org.example.paquete.Grafo;
 
-public class Operación {
+import org.example.paquete.individuos.Individuo;
+import org.example.paquete.recursos.Recurso;
+
+public class Operacion {
     private String beber = "beber";
     private String comer = "comer";
     private String biblio = "biblioteca";
     private String tesoro = "tesoro";
     private String pozo = "pozo";
     private String Montania = "montaña";
+    private String Clonacion = "clonación";
+    private Individuo Hijo;
+
+
+
+    //constructores
+
+    public Operacion (Recurso recurso){
+
+    }
 
 
     //getters y setters
+
+    public String getClonacion() {
+        return Clonacion;
+    }
+
+    public void setClonación(String clonacion) {
+        Clonacion = clonacion;
+    }
+
     public String getBeber() {
         return beber;
     }
