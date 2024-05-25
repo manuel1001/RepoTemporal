@@ -139,6 +139,8 @@ public class MenuController implements GsonUtilEjemplo{
             nuevaStage.setTitle("Juego");
             nuevaStage.setScene(new Scene(root));
             nuevaStage.show();
+            Stage esteStage = (Stage) sliderProbAgua.getScene().getWindow();
+            esteStage.close();
         } catch (IOException ex) {
             System.out.println("Error");
         }
@@ -161,6 +163,8 @@ public class MenuController implements GsonUtilEjemplo{
             nuevaStage.setTitle("Juego");
             nuevaStage.setScene(new Scene(root));
             nuevaStage.show();}
+//        Stage esteStage = (Stage) sliderProbAgua.getScene().getWindow();
+//        esteStage.close();
     }
     @FXML
     public void onCargarPartidaClick() throws IOException {

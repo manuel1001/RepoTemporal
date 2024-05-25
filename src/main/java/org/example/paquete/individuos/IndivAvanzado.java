@@ -1,5 +1,8 @@
 package org.example.paquete.individuos;
 
+import org.example.paquete.ArbolBinario.ArbolBinario;
+import org.example.paquete.ArbolBinario.ElementoA;
+
 public class IndivAvanzado extends Individuo{
     public IndivAvanzado(int probRepro, int vida, int probClon, int id, int posX, int posY ){
         this.setVida(vida);
@@ -10,5 +13,6 @@ public class IndivAvanzado extends Individuo{
         this.setPosX(posX);
         this.setPosY(posY);
         this.setTipo("Avanzado");
+        this.setArbolGene(new ArbolBinario(new ElementoA(this.getId())));
     }
 }

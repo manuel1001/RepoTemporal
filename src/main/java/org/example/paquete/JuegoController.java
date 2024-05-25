@@ -1,13 +1,13 @@
 package org.example.paquete;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import org.example.paquete.ArbolBinario.ArbolBinario;
+import org.example.paquete.ArbolBinario.ElementoA;
 import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
-import org.example.paquete.ListaEnlazada.*;
 import org.example.paquete.individuos.Individuo;
 import org.example.paquete.recursos.Agua;
 import org.example.paquete.recursos.*;
@@ -71,6 +71,14 @@ public class JuegoController implements GsonUtilEjemplo {
     private Label labelProbPozo;
     @FXML
     private Slider sliderProbPozo;
+    @FXML
+    private Slider sliderTurnosVida;
+    @FXML
+    private Slider sliderProbClon;
+    @FXML
+    private Slider sliderProbRepro;
+    @FXML
+    private Slider sliderMejoraTipo;
     ///Boolean para no comenzar dos veces
     private boolean comenzado = false;
 
@@ -107,6 +115,8 @@ public class JuegoController implements GsonUtilEjemplo {
     private Label labelGuardadaPartida;
     @FXML
     private TextField fieldGuardadaParitda;
+    @FXML
+    private TextArea areaArbol;
 
     ///Methods
     public void setNombreJuego(String nombreJuego) {
@@ -248,7 +258,6 @@ public class JuegoController implements GsonUtilEjemplo {
         }
         ///No se por qué pero hay que hacer esta corrección
         pos = pos - 1;
-        System.out.println("Posicion:" + pos);
         labelClickCasilla.setText("Casilla pulsada: " + listaCasillas.getElemento(pos).getData().getPosX() + "," + listaCasillas.getElemento(pos).getData().getPosY());
         String indLayout = "";
         if (listaCasillas.getElemento(pos).getData().getListaIndividuos().getNumeroElementos() > 0) {
@@ -286,19 +295,19 @@ public class JuegoController implements GsonUtilEjemplo {
     @FXML
     public void onActualizarClick() throws NullPointerException {
         try {
-                propiedadesModelo.commit();
-                System.out.println(modelo);
-            }
-         catch (NullPointerException ex) {
+            propiedadesModelo.commit();
+            System.out.println(modelo);
+        }
+        catch (NullPointerException ex) {
             System.out.println("Comienza primero");
         }
     }
     public void onBucleOrden() {
-        int x3 = modelo.getListaInicialIndividuos().getNumeroElementos();
+        int numInds = modelo.getListaInicialIndividuos().getNumeroElementos();
         ///Comprobamos si ha terminado la partida
-        if (x3 > 1) {
+        if (numInds > 1) {
             ///1.Actualizamos el tiempo de vida de cada individuo
-            for (int i = 0; i < x3; i++) {
+            for (int i = 0; i < numInds; i++) {
                 Individuo ind1 = modelo.getListaInicialIndividuos().getElemento(i).getData();
                 if (ind1.getVida() <= 0) {
                     int posx1 = ind1.getPosX();
@@ -307,7 +316,7 @@ public class JuegoController implements GsonUtilEjemplo {
                     listaCasillas.getElemento(conversorPosicion(posx1, posy1)).getData().delIndividuo(ind1);
                     listaLabels.getElemento(conversorPosicion(posx1, posy1)).getData().setText(listaLabels.getElemento(conversorPosicion(posx1, posy1)).getData().getText().replaceFirst("I", ""));
                     i--;
-                    x3--;
+                    numInds--;
                 } else {
                     ind1.setVida(ind1.getVida() - 1);
                 }
@@ -365,7 +374,7 @@ public class JuegoController implements GsonUtilEjemplo {
                 listaCasillas.getElemento(conversorPosicion(posx, posy)).getData().delIndividuo(ind);
                 listaLabels.getElemento(conversorPosicion(posx, posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx, posy)).getData().getText().replaceFirst("I", ""));
                 if (ind.getTipo().equals("Básico")) {
-                    ind.movimientoBasic();
+                    ind.movimientoBasic(modelo.getNumeroColumnas(), modelo.getNumeroFilas());
                     int posx2 = ind.getPosX();
                     int posy2 = ind.getPosY();
                     listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
@@ -395,17 +404,17 @@ public class JuegoController implements GsonUtilEjemplo {
                             ind.setPosX(ind.getPosX() + 1);
                         }
                         if (ind.getRecursoObj().getPosY() > ind.getPosY()) {
-                            ind.setPosX(ind.getPosX() + 1);
+                            ind.setPosY(ind.getPosY() + 1);
                         }
                         if (ind.getRecursoObj().getPosY() < ind.getPosY()) {
-                            ind.setPosX(ind.getPosX() - 1);
+                            ind.setPosY(ind.getPosY() - 1);
                         }
                         int posx2 = ind.getPosX();
                         int posy2 = ind.getPosY();
                         listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
                         listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
                     } else {
-                        ind.movimientoBasic();
+                        ind.movimientoBasic(modelo.getNumeroColumnas(), modelo.getNumeroFilas());
                         int posx2 = ind.getPosX();
                         int posy2 = ind.getPosY();
                         listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
@@ -415,42 +424,46 @@ public class JuegoController implements GsonUtilEjemplo {
                 }
                 if (ind.getTipo().equals("Avanzado")) {
                     if (contadorTurno != 0) {
-                    if (ind.getRecursoObj() == null || ind.getRecursoObj().getDuracion() == 0 || (ind.getRecursoObj().getPosY() == ind.getPosY() && ind.getRecursoObj().getPosX() == ind.getPosX())) {
-                        double moduloDistanciaMin = 100;
-                        for (int p = 0; p < listaCasillas.getNumeroElementos(); p++) {
-                            if (listaCasillas.getElemento(p).getData().getListaRecursos().getNumeroElementos() > 0) {
-                                for (int j = 0; j < listaCasillas.getElemento(p).getData().getListaRecursos().getNumeroElementos(); j++) {
-                                    double disx = listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData().getPosX();
-                                    double disy = listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData().getPosY();
-                                    if (Math.sqrt((disx * disx) + (disy * disy) ) <= moduloDistanciaMin){
-                                        System.out.println("Cambiando objetivo por uno más cercano");
-                                        moduloDistanciaMin = Math.sqrt((disx * disx) + (disy * disy));
-                                        ind.setRecursoObj(listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData());
+                        System.out.println("Estoy en:"+ ind.getPosX() + "," + ind.getPosY());
+                        if (ind.getRecursoObj() == null || ind.getRecursoObj().getDuracion() == 0 || (ind.getRecursoObj().getPosY() == ind.getPosY() && ind.getRecursoObj().getPosX() == ind.getPosX())) {
+                            double moduloDistanciaMin = 100;
+                            for (int p = 0; p < listaCasillas.getNumeroElementos(); p++) {
+                                if (listaCasillas.getElemento(p).getData().getListaRecursos().getNumeroElementos() > 0) {
+                                    for (int j = 0; j < listaCasillas.getElemento(p).getData().getListaRecursos().getNumeroElementos(); j++) {
+                                        double disx = listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData().getPosX();
+                                        double disy = listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData().getPosY();
+                                        if (Math.sqrt((disx * disx) + (disy * disy) ) <= moduloDistanciaMin){
+                                            System.out.println("Cambiando objetivo por uno más cercano");
+                                            moduloDistanciaMin = Math.sqrt((disx * disx) + (disy * disy));
+                                            ind.setRecursoObj(listaCasillas.getElemento(p).getData().getListaRecursos().getElemento(j).getData());
+                                        }
                                     }
                                 }
                             }
                         }
+                        System.out.println("Voy hacia:" + ind.getRecursoObj().getPosX() + ","+ ind.getRecursoObj().getPosY());
+                        ///Ahora nos movemos hacia él
+                        if (ind.getRecursoObj().getPosX() < ind.getPosX()) {
+                            ind.setPosX(ind.getPosX() - 1);
+                        }
+                        if (ind.getRecursoObj().getPosX() > ind.getPosX()) {
+                            ind.setPosX(ind.getPosX() + 1);
+                        }
+                        if (ind.getRecursoObj().getPosY() > ind.getPosY()) {
+                            ind.setPosY(ind.getPosY() + 1);
+                        }
+                        if (ind.getRecursoObj().getPosY() < ind.getPosY()) {
+                            ind.setPosY(ind.getPosY() - 1);
+                        }
+                        int posx2 = ind.getPosX();
+                        int posy2 = ind.getPosY();
+                        listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
+                        listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
+                        System.out.println("Me he movido a:"+ ind.getPosX() + "," + ind.getPosY());
+
                     }
-                    ///Ahora nos movemos hacia él
-                    if (ind.getRecursoObj().getPosX() < ind.getPosX()) {
-                        ind.setPosX(ind.getPosX() - 1);
-                    }
-                    if (ind.getRecursoObj().getPosX() > ind.getPosX()) {
-                        ind.setPosX(ind.getPosX() + 1);
-                    }
-                    if (ind.getRecursoObj().getPosY() > ind.getPosY()) {
-                        ind.setPosX(ind.getPosX() + 1);
-                    }
-                    if (ind.getRecursoObj().getPosY() < ind.getPosY()) {
-                        ind.setPosX(ind.getPosX() - 1);
-                    }
-                    int posx2 = ind.getPosX();
-                    int posy2 = ind.getPosY();
-                    listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
-                    listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().setText(listaLabels.getElemento(conversorPosicion(posx2, posy2)).getData().getText() + "I");
-                }
                     else{
-                        ind.movimientoBasic();
+                        ind.movimientoBasic(modelo.getNumeroColumnas(), modelo.getNumeroFilas());
                         int posx2 = ind.getPosX();
                         int posy2 = ind.getPosY();
                         listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind);
@@ -490,15 +503,82 @@ public class JuegoController implements GsonUtilEjemplo {
                 }
             }
             ///5. ¿Reproducciones?
-            //
+            for(int l = 0; l < listaCasillas.getNumeroElementos(); l ++) {
+                if (listaCasillas.getElemento(l).getData().getListaIndividuos().getNumeroElementos() > 1) {
+                    for (int m = 1; m < listaCasillas.getElemento(l).getData().getListaIndividuos().getNumeroElementos(); m++) {
+                        Random rand = new Random();
+                        int ruleta = rand.nextInt(101);
+                        int repro1 = listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getProbRepro();
+                        int repro2 = listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getProbRepro();
+                        int mediaRepro = (repro1 + repro2) / 2;
+                        if (ruleta <= mediaRepro) {
+                            ///En caso de que coincidan en tipo, el hijo será de ese tipo
+                            if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo())) {
+                                if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Básico")) {
+                                    IndivBasico hijo = new IndivBasico((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Normal")) {
+                                    IndivNormal hijo = new IndivNormal((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Avanzado")) {
+                                    IndivAvanzado hijo = new IndivAvanzado((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                }
+                                contadorId++;
+                                System.out.println("Repro en:" + listaCasillas.getElemento(l).getData().getPosX() + "," + listaCasillas.getElemento(l).getData().getPosY());
+                                ;
+                            }
+                            else{
+                            ///En el caso en el que el tipo difiera, estudiamos el valor de la mejora de tipo
+                            ruleta = rand.nextInt(101);
+                            if (ruleta <= (int) sliderMejoraTipo.getValue()) {///El tipo mejora, recorremos los tipos de mas avanzado a más básico, y si alguno coincide dejamos de buscar
+                                if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Avanzado") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Avanzado")) {
+                                    IndivAvanzado hijo = new IndivAvanzado((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Normal") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Normal")) {
+                                    IndivNormal hijo = new IndivNormal((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Básico") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Básico")) {
+                                    IndivBasico hijo = new IndivBasico((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                }
+                                contadorId++;
+                            } else {/// Sí la probabilidad de mejora no ha salido, recorremos en dirección inversa, de más básico a más avanzado
+                                if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Básico") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Básico")) {
+                                    IndivBasico hijo = new IndivBasico((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Normal") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Normal")) {
+                                    IndivNormal hijo = new IndivNormal((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                } else if (listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getTipo().equals("Avanzado") || listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getTipo().equals("Avanzado")) {
+                                    IndivAvanzado hijo = new IndivAvanzado((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, listaCasillas.getElemento(l).getData().getPosX(), listaCasillas.getElemento(l).getData().getPosY());
+                                    hijo.getArbolGene().getRaiz().setDerecha(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(0).getData().getArbolGene().getRaiz());
+                                    hijo.getArbolGene().getRaiz().setIzquierda(listaCasillas.getElemento(l).getData().getListaIndividuos().getElemento(m).getData().getArbolGene().getRaiz());
+                                }
+                                contadorId++;
+                            }
+                        }}
+                    }
+                }
+            }
             ///6. ¿Clonaciones?
             for (int i = 0; i < x4; i++) {
                 Individuo ind = modelo.getListaInicialIndividuos().getElemento(i).getData();
                 if (ind.meClono()) {
                     int posx2 = ind.getPosX();
                     int posy2 = ind.getPosY();
-
                     Individuo ind2 = new Individuo(contadorId, contadorTurno, ind.getVida(), ind.getProbRepro(), ind.getProbClon(), ind.getProbMuerte(), posx2, posy2, ind.getTipo());
+                    ind2.setArbolGene(new ArbolBinario(new ElementoA(ind2.getId())));
+                    ///Si viene de clonación, a la derecha tendra a su progenitos
+//                    ind2.getArbolGene().enlazarDerecha(ind);
                     contadorId++;
                     modelo.getListaInicialIndividuos().add(new ElementoInd(ind2));
                     listaCasillas.getElemento(conversorPosicion(posx2, posy2)).getData().addIndividuo(ind2);
@@ -597,7 +677,16 @@ public class JuegoController implements GsonUtilEjemplo {
                 }
             }
         } else {
-            labelTurnoLayout.setText("Turno:" + contadorTurno + ", partida finalizada");
+            if (numInds == 0) {
+                labelTurnoLayout.setText("Turno:" + contadorTurno + ", partida finalizada sin supervivientes");
+
+            }
+            else if(numInds ==1){
+                String arbolGanador = modelo.getListaInicialIndividuos().getElemento(0).getData().getArbolGene().imprimirArbol();
+                labelTurnoLayout.setText("Turno:" + contadorTurno + ", partida finalizada con id del ganador: " + modelo.getListaInicialIndividuos().getElemento(0).getData().getId());
+                areaArbol.setText(arbolGanador);
+                System.out.println(arbolGanador);
+            }
         }
     }
 
@@ -633,17 +722,17 @@ public class JuegoController implements GsonUtilEjemplo {
                 } else if (choiceClase.getValue().equals("IndivBásico") || choiceClase.getValue().equals("IndivAvanzado") || choiceClase.getValue().equals("IndivNormal")) {
                     if (listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaIndividuos().getNumeroElementos() < 3) {
                         if (choiceClase.getValue().equals("IndivBásico")) {
-                            IndivBasico ind = new IndivBasico(30, 8, 30, contadorId, choicePosX.getValue(), choicePosY.getValue());
+                            IndivBasico ind = new IndivBasico((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, choicePosX.getValue(), choicePosY.getValue());
                             modelo.getListaInicialIndividuos().add(new ElementoInd(ind));
                             listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaIndividuos().add(new ElementoInd(ind));
                             listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "I");
                         } else if (choiceClase.getValue().equals("IndivNormal")) {
-                            IndivNormal ind = new IndivNormal(30, 8, 30, contadorId, choicePosX.getValue(), choicePosY.getValue());
+                            IndivNormal ind = new IndivNormal((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, choicePosX.getValue(), choicePosY.getValue());
                             modelo.getListaInicialIndividuos().add(new ElementoInd(ind));
                             listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaIndividuos().add(new ElementoInd(ind));
                             listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "I");
                         } else if (choiceClase.getValue().equals("IndivAvanzado")) {
-                            IndivAvanzado ind = new IndivAvanzado(30, 8, 30, contadorId, choicePosX.getValue(), choicePosY.getValue());
+                            IndivAvanzado ind = new IndivAvanzado((int) sliderProbRepro.getValue(), (int) sliderTurnosVida.getValue(), (int) sliderProbClon.getValue(), contadorId, choicePosX.getValue(), choicePosY.getValue());
                             modelo.getListaInicialIndividuos().add(new ElementoInd(ind));
                             listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getListaIndividuos().add(new ElementoInd(ind));
                             listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().setText(listaLabels.getElemento(conversorPosicion(choicePosX.getValue(), choicePosY.getValue())).getData().getText() + "I");

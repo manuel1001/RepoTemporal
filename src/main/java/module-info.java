@@ -12,6 +12,7 @@ module org.example.proyectomigrado {
     opens org.example.paquete.ListaEnlazada to javafx.fxml,com.google.gson;
     opens org.example.paquete.individuos to javafx.fxml,com.google.gson;
     opens org.example.paquete.recursos to javafx.fxml,com.google.gson;
+    opens org.example.paquete.ArbolBinario to javafx.fxml,com.google.gson;
 
 
 }

@@ -1,6 +1,7 @@
 package org.example.paquete.individuos;
 
-import org.example.paquete.ListaEnlazada.ListaRecursos;
+import org.example.paquete.ArbolBinario.ArbolBinario;
+import org.example.paquete.ArbolBinario.ElementoA;
 import org.example.paquete.recursos.Recurso;
 
 import java.util.Random;
@@ -13,6 +14,7 @@ public class Individuo {
     private int probClon;
     private int probMuerte = 100 - this.probRepro;
     private int posX;
+    private ArbolBinario arbolGene;
 
     private int posY;
     ///El argumento arbolGenealógico surge como necesidad
@@ -64,6 +66,7 @@ public class Individuo {
         this.posX = posX;
         this.posY = posY;
         this.tipo = tipo;
+        this.setArbolGene(new ArbolBinario(new ElementoA(this.getId())));
     }
 
     public int getId() {
@@ -179,9 +182,9 @@ public class Individuo {
     }
 
 
-    public void movimiento(int X, int Y) {
-        this.posX = X;
-        this.posY = Y;
+    public void movimiento(int x, int y) {
+        this.posX = this.posX +x;
+        this.posY = this.posY +y;
     }
 
     @Override
@@ -196,24 +199,29 @@ public class Individuo {
                 '}';
     }
 
-    public void movimientoBasic() {
+    public void movimientoBasic(int columnas, int filas) {
         Random numero1 = new Random();
         Random numero2 = new Random();
-        int n1 = numero1.nextInt(2);
-        int n2 = numero2.nextInt(2);
-        if (n1 == 1 && getPosX() < 8) {
-            this.posX++;
-            if (n2 == 1 && this.posY < 8) {
-                this.posY++;
-            } else if (n2 == 0 && this.posY > 1) {
-                this.posY--;
-            }
-        } else if (n1 == 0 && this.posX > 1) {
-            this.posX--;
-            if (n2 == 1 && this.posY < 8) {
-                this.posY++;
-            } else if (n2 == 0 && this.posY > 1) {
-                this.posY--;
+        boolean movido = false;
+        while (!movido) {
+            int n1 = numero1.nextInt(2);
+            int n2 = numero2.nextInt(2);
+            if (n1 == 1 && getPosX() < columnas) {
+                this.posX++;
+                if (n2 == 1 && this.posY < filas) {
+                    this.posY++;
+                } else if (n2 == 0 && this.posY > 1) {
+                    this.posY--;
+                }
+                movido = true;
+            } else if (n1 == 0 && this.posX > 1) {
+                this.posX--;
+                if (n2 == 1 && this.posY < filas) {
+                    this.posY++;
+                } else if (n2 == 0 && this.posY > 1) {
+                    this.posY--;
+                }
+                movido = true;
             }
         }
     }
@@ -221,6 +229,12 @@ public class Individuo {
         Random rand = new Random();
         int n = rand.nextInt(101);
         return this.probClon >= n;
+    }
+    public ArbolBinario getArbolGene(){
+        return this.arbolGene;
+    }
+    public void setArbolGene(ArbolBinario arbolGene){
+        this.arbolGene = arbolGene;
     }
 }
 
