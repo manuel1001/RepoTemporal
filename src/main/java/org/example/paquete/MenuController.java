@@ -120,7 +120,10 @@ public class MenuController implements GsonUtilEjemplo{
                 GsonUtilEjemplo.guardarObjetoEnArchivo(nombrePartida, nuevaPartida);
                 Partida cargaPartida = GsonUtilEjemplo.cargarObjetoDesdeArchivo(nombrePartida, Partida.class);
                 String nombreCarga = cargaPartida.getArchivoNombre() + ".json";
-                labelNuevaPartida.textProperty().set(nombreCarga);}
+                labelNuevaPartida.textProperty().set(nombreCarga);
+            log.info("El usuario ha guardado su plantilla");
+            }
+
             catch (FileNotFoundException exception){
                 labelNuevaPartida.textProperty().set("Error al cargar partida");
             }
@@ -145,8 +148,9 @@ public class MenuController implements GsonUtilEjemplo{
             nuevaStage.show();
             Stage esteStage = (Stage) sliderProbAgua.getScene().getWindow();
             esteStage.close();
+            log.info("El usuario ha comenzado sin guardar su plantilla");
         } catch (IOException ex) {
-            System.out.println("Error");
+            log.fatal("No se puede arrancar el juego");
         }
     }
 
@@ -155,9 +159,9 @@ public class MenuController implements GsonUtilEjemplo{
     public void onIniciarPartidaCargadaClick() throws IOException {
         if(labelNuevaPartida.getText() == "" || labelNuevaPartida.getText() == "Selecciona un nombre válido para tu partida"  || labelNuevaPartida.getText() == "Error al cargar partida"){
             labelNuevaPartida.textProperty().set("Selecciona un nombre válido para tu partida");
+            log.warn("El usuario ha introducido un nombre de partida que no existe");
         }
         else{
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("juego-view.fxml"));
             Parent root = loader.load();
             JuegoController controlador2 = loader.getController();
@@ -167,8 +171,9 @@ public class MenuController implements GsonUtilEjemplo{
             nuevaStage.setTitle("Juego");
             nuevaStage.setScene(new Scene(root));
             nuevaStage.show();}
-//        Stage esteStage = (Stage) sliderProbAgua.getScene().getWindow();
-//        esteStage.close();
+        Stage esteStage = (Stage) sliderProbAgua.getScene().getWindow();
+        esteStage.close();
+        log.info("El usuario ha iniciado una partida desde un archivo, cerrando menú");
     }
     @FXML
     public void onCargarPartidaClick() throws IOException {
@@ -176,7 +181,7 @@ public class MenuController implements GsonUtilEjemplo{
             Partida cargaPartida = GsonUtilEjemplo.cargarObjetoDesdeArchivo(fieldNombrePartida.getText() + ".json", Partida.class);
             labelNuevaPartida.textProperty().set(cargaPartida.getArchivoNombre() + ".json");
         } catch (NullPointerException ex) {
-            labelNuevaPartida.textProperty().set("Error al cargar partida");
+            log.warn("El usuario ha introducido un nombre de partida que no existe");
         } catch (FileNotFoundException ex){
             labelNuevaPartida.textProperty().set("Error al cargar partida");
         }
@@ -240,13 +245,13 @@ public class MenuController implements GsonUtilEjemplo{
                 contIndiv++;
             }
             else{
-                System.out.println("error");
+                log.warn("Error al crear un individuo");
             }
             labelNumInd.textProperty().setValue(String.valueOf(this.contIndiv));
         }
         else {
             labelNumInd.textProperty().setValue("15, individuo no admitido");
-            System.out.println("Lista de individuos llena");
+            log.warn("Capacidad inicial de individuos máxima alcanza, individuo no admitido");
         }
     }
 }

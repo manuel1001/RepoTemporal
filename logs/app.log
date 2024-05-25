@@ -245,3 +245,4 @@
 2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 10,12
 2024-05-25 18:09:31.391 - INFO  - org.example.paquete.JuegoController - Aparece nuevo pozo en 12,12
 2024-05-25 18:09:31.394 - INFO  - org.example.paquete.JuegoController - Se ha restado 10% en las probabilidades de cada individuo
+2024-05-25 18:50:59.415 - INFO  - org.example.paquete.MenuController - Cargando el menú

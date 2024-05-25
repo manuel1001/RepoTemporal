@@ -787,7 +787,7 @@ public class JuegoController implements GsonUtilEjemplo {
                         contadorId++;
                     } else {
                         labelInfoInterac.setText("La casilla ya está llena de individuos");
-                        log.warn("El usuario ha intentado añadir un ");
+                        log.warn("El usuario ha intentado añadir un individuo a una casilla que ya estaba llena");
                     }
 
 
@@ -807,6 +807,7 @@ public class JuegoController implements GsonUtilEjemplo {
                                 }
                                 if(actuado){
                                     labelInfoInterac.setText("Aguas eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                    log.info("El usuario ha borrado el agua de " + choicePosX.getValue() + "," + choicePosY.getValue());
                                 }
                             }
                         }
@@ -819,6 +820,7 @@ public class JuegoController implements GsonUtilEjemplo {
                                 }
                                 if(actuado){
                                     labelInfoInterac.setText("Comidas eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                    log.info("El usuario ha borrado la comida de " + choicePosX.getValue() + "," + choicePosY.getValue());
                                 }
                             }
                         }
@@ -831,6 +833,7 @@ public class JuegoController implements GsonUtilEjemplo {
                                 }
                                 if(actuado){
                                     labelInfoInterac.setText("Montañas eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                    log.info("El usuario ha borrado la montaña de " + choicePosX.getValue() + "," + choicePosY.getValue());
                                 }
                             }
                         }
@@ -843,6 +846,7 @@ public class JuegoController implements GsonUtilEjemplo {
                                 }
                                 if(actuado){
                                     labelInfoInterac.setText("Tesoros eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                    log.info("El usuario ha borrado el tesoro de " + choicePosX.getValue() + "," + choicePosY.getValue());
                                 }
                             }
                         }
@@ -855,10 +859,11 @@ public class JuegoController implements GsonUtilEjemplo {
                                 }
                                 if(actuado){
                                     labelInfoInterac.setText("Bibliotecas eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                    log.info("El usuario ha borrado la biblioteca de " + choicePosX.getValue() + "," + choicePosY.getValue());
                                 }
                             }
                         }
-                        else if (choiceClase.getValue().equals("Pozos")) {
+                        else if (choiceClase.getValue().equals("Pozo")) {
                             for(int k = 0; k < listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getNumeroElementos(); k++){
                                 if(listaCasillas.getElemento(conversorPosicion(choicePosX.getValue(),choicePosY.getValue())).getData().getListaRecursos().getElemento(k).getData() instanceof Pozo){
                                     actuado = true;
@@ -867,15 +872,18 @@ public class JuegoController implements GsonUtilEjemplo {
                                 }
                                 if(actuado){
                                     labelInfoInterac.setText("Pozos eliminadas de: " + choicePosX.getValue() + "," + choicePosY.getValue());
+                                    log.info("El usuario ha borrado el pozo de " + choicePosX.getValue() + "," + choicePosY.getValue());
                                 }
                             }
                         }
                         if (!actuado){
                             labelInfoInterac.setText("Seleccione un recurso que haya");
+                            log.warn("El usuario ha intentado borrar un recurso en una casilla sin este");
                         }
                     }
                     else{
                         labelInfoInterac.setText("No hay recursos ahí");
+                        log.warn("El usuario ha intentado borrar un recurso de una casilla vacía");
                     }
                 }
                 ///Borrada de individuos
@@ -900,11 +908,12 @@ public class JuegoController implements GsonUtilEjemplo {
                         }
                     }
                     listaLabels.getElemento(conversorPosicion(posx,posy)).getData().setText(listaLabels.getElemento(conversorPosicion(posx,posy)).getData().getText().replaceFirst("I", ""));
-                    labelInfoInterac.setText("Individuo con id:" + choiceId.getValue() + " borrado de la casilla: " + ind.getPosX() +","+ ind.getPosY());
+                    log.info("Individuo con id:" + choiceId.getValue() + " borrado de la casilla: " + ind.getPosX() +","+ ind.getPosY());
                 }
             }
         } catch (NullPointerException exception) {
             labelInfoInterac.setText("Error, por favor haga una selección válida");
+            log.warn("El usuario ha intentado hacer una interacción mal");
         }
     }
     public void onGuardarPartidaClick(){
@@ -918,12 +927,11 @@ public class JuegoController implements GsonUtilEjemplo {
                 }
                 System.out.println("Iterando");
             }
-            System.out.println("salgo del bucle");
             modelo.setTodosRecuros(listaRecursos);
             modelo.setArchivoNombre(fieldGuardadaParitda.getText());
             GsonUtilEjemplo.guardarObjetoEnArchivo(fieldGuardadaParitda.getText() + ".json", modelo);
             labelGuardadaPartida.setText("Partida guardada");
-            System.out.println("Llego al final");
+            log.info("El usuario ha guardado la partida en el turno " + contadorTurno);
         }
     }
     public void setModelo(Partida modelo){
